@@ -1,0 +1,140 @@
+import React, { createContext, useContext, useState, ReactNode } from 'react';
+
+interface LanguageContextType {
+  language: 'hi' | 'en';
+  setLanguage: (lang: 'hi' | 'en') => void;
+  t: (key: string) => string;
+}
+
+const translations = {
+  hi: {
+    // Navigation
+    'nav.title': 'AgriCarbon MRV',
+    'nav.subtitle': 'कृषि कार्बन ट्रैकिंग',
+    'nav.farmer': 'किसान राम',
+    
+    // Dashboard
+    'dashboard.title': 'आपका कार्बन डैशबोर्ड',
+    'dashboard.subtitle': 'अपने खेत की कार्बन क्रेडिट्स देखें और प्रबंधित करें',
+    'dashboard.addProject': 'नया प्रोजेक्ट जोड़ें',
+    'dashboard.projects': 'आपके प्रोजेक्ट्स',
+    'dashboard.noProjects': 'कोई प्रोजेक्ट नहीं',
+    'dashboard.noProjectsDesc': 'अपना पहला कार्बन प्रोजेक्ट शुरू करें',
+    
+    // Stats
+    'stats.totalCredits': 'कुल कार्बन क्रेडिट्स',
+    'stats.totalArea': 'कुल क्षेत्रफल',
+    'stats.activeProjects': 'सक्रिय प्रोजेक्ट्स',
+    
+    // Project Status
+    'status.active': 'सक्रिय',
+    'status.pending': 'प्रतीक्षित',
+    'status.completed': 'पूर्ण',
+    
+    // Add Project Modal
+    'modal.title': 'नया प्रोजेक्ट जोड़ें',
+    'modal.subtitle': 'अपने खेत को कार्बन क्रेडिट प्रोग्राम में शामिल करें',
+    'modal.basicInfo': 'बुनियादी जानकारी',
+    'modal.projectName': 'प्रोजेक्ट का नाम',
+    'modal.cropType': 'फसल का प्रकार चुनें',
+    'modal.rice': 'धान/चावल',
+    'modal.agroforestry': 'कृषि वानिकी',
+    'modal.location': 'स्थान/गांव',
+    'modal.area': 'खेत का क्षेत्रफल (एकड़ में)',
+    'modal.photos': 'खेत की तस्वीरें जोड़ें',
+    'modal.camera': 'कैमरा खोलें',
+    'modal.gallery': 'गैलरी से चुनें',
+    'modal.cancel': 'रद्द करें',
+    'modal.next': 'अगला',
+    'modal.previous': 'पिछला',
+    'modal.submit': 'प्रोजेक्ट जोड़ें',
+    
+    // Footer
+    'footer.company': 'Innovative Mind',
+    'footer.tagline': 'भारतीय किसानों के लिए कार्बन क्रेडिट समाधान',
+    'footer.about': 'हमारे बारे में',
+    'footer.contact': 'संपर्क',
+    'footer.privacy': 'गोपनीयता नीति',
+    'footer.terms': 'नियम और शर्तें',
+    'footer.support': 'सहायता',
+    'footer.faq': 'सामान्य प्रश्न',
+    'footer.rights': '© 2025 Innovative Mind. सभी अधिकार सुरक्षित।'
+  },
+  en: {
+    // Navigation
+    'nav.title': 'AgriCarbon MRV',
+    'nav.subtitle': 'Agricultural Carbon Tracking',
+    'nav.farmer': 'Farmer Ram',
+    
+    // Dashboard
+    'dashboard.title': 'Your Carbon Dashboard',
+    'dashboard.subtitle': 'View and manage your farm carbon credits',
+    'dashboard.addProject': 'Add New Project',
+    'dashboard.projects': 'Your Projects',
+    'dashboard.noProjects': 'No Projects',
+    'dashboard.noProjectsDesc': 'Start your first carbon project',
+    
+    // Stats
+    'stats.totalCredits': 'Total Carbon Credits',
+    'stats.totalArea': 'Total Area',
+    'stats.activeProjects': 'Active Projects',
+    
+    // Project Status
+    'status.active': 'Active',
+    'status.pending': 'Pending',
+    'status.completed': 'Completed',
+    
+    // Add Project Modal
+    'modal.title': 'Add New Project',
+    'modal.subtitle': 'Register your farm for carbon credit program',
+    'modal.basicInfo': 'Basic Information',
+    'modal.projectName': 'Project Name',
+    'modal.cropType': 'Select Crop Type',
+    'modal.rice': 'Rice',
+    'modal.agroforestry': 'Agroforestry',
+    'modal.location': 'Location/Village',
+    'modal.area': 'Farm Area (in acres)',
+    'modal.photos': 'Add Farm Photos',
+    'modal.camera': 'Open Camera',
+    'modal.gallery': 'Choose from Gallery',
+    'modal.cancel': 'Cancel',
+    'modal.next': 'Next',
+    'modal.previous': 'Previous',
+    'modal.submit': 'Add Project',
+    
+    // Footer
+    'footer.company': 'Innovative Mind',
+    'footer.tagline': 'Carbon Credit Solutions for Indian Farmers',
+    'footer.about': 'About Us',
+    'footer.contact': 'Contact',
+    'footer.privacy': 'Privacy Policy',
+    'footer.terms': 'Terms & Conditions',
+    'footer.support': 'Support',
+    'footer.faq': 'FAQ',
+    'footer.rights': '© 2025 Innovative Mind. All rights reserved.'
+  }
+};
+
+const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+
+export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [language, setLanguage] = useState<'hi' | 'en'>('hi');
+
+  const t = (key: string): string => {
+    return translations[language][key as keyof typeof translations['hi']] || key;
+  };
+
+  return (
+    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+      {children}
+    </LanguageContext.Provider>
+  );
+};
+
+export const useLanguage = () => {
+  const context = useContext(LanguageContext);
+  if (!context) {
+    throw new Error('useLanguage must be used within a LanguageProvider');
+  }
+  return context;
+};

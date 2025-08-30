@@ -1,0 +1,278 @@
+import React, { useState } from 'react';
+import { X, MapPin, Calendar, Camera, TrendingUp, Leaf, Coins, BarChart3 } from 'lucide-react';
+import { Project } from '../types/Project';
+import { useLanguage } from '../contexts/LanguageContext';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
+} from 'chart.js';
+import { Line, Bar } from 'react-chartjs-2';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+interface ProjectDetailModalProps {
+  project: Project;
+  onClose: () => void;
+}
+
+const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, onClose }) => {
+  const { language } = useLanguage();
+  const [activeTab, setActiveTab] = useState('overview');
+
+  // Sample data for charts
+  const carbonData = {
+    labels: ['जन', 'फर', 'मार', 'अप्र', 'मई', 'जून'],
+    datasets: [
+      {
+        label: 'कार्बन क्रेडिट्स (टन)',
+        data: [2.1, 3.5, 4.8, 6.2, 8.1, 10.5],
+        borderColor: 'rgb(34, 197, 94)',
+        backgroundColor: 'rgba(34, 197, 94, 0.1)',
+        tension: 0.4,
+      },
+    ],
+  };
+
+  const incomeData = {
+    labels: ['जन', 'फर', 'मार', 'अप्र', 'मई', 'जून'],
+    datasets: [
+      {
+        label: 'आय (₹)',
+        data: [3150, 5250, 7200, 9300, 12150, 15750],
+        backgroundColor: 'rgba(34, 197, 94, 0.8)',
+      },
+    ],
+  };
+
+  const openMap = () => {
+    // Open Google Maps with the project location
+    const encodedLocation = encodeURIComponent(project.location);
+    window.open(`https://www.google.com/maps/search/${encodedLocation}`, '_blank');
+  };
+
+  const getCropIcon = (type: string) => {
+    if (type === 'rice') return '🌾';
+    if (type === 'agroforestry') return '🌳';
+    return '🌱';
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'active': return 'bg-green-100 text-green-800';
+      case 'pending': return 'bg-yellow-100 text-yellow-800';
+      case 'completed': return 'bg-blue-100 text-blue-800';
+      default: return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  const getStatusText = (status: string) => {
+    switch (status) {
+      case 'active': return language === 'hi' ? 'सक्रिय' : 'Active';
+      case 'pending': return language === 'hi' ? 'प्रतीक्षित' : 'Pending';
+      case 'completed': return language === 'hi' ? 'पूर्ण' : 'Completed';
+      default: return status;
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
+        {/* Header */}
+        <div className="bg-gradient-to-r from-green-500 to-emerald-600 p-6 text-white">
+          <div className="flex justify-between items-start">
+            <div className="flex items-center space-x-4">
+              <span className="text-4xl">{getCropIcon(project.type)}</span>
+              <div>
+                <h2 className="text-2xl font-bold">{project.name}</h2>
+                <div className="flex items-center space-x-4 mt-2">
+                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(project.status)}`}>
+                    {getStatusText(project.status)}
+                  </span>
+                  <button
+                    onClick={openMap}
+                    className="flex items-center space-x-1 bg-white bg-opacity-20 px-3 py-1 rounded-full hover:bg-opacity-30 transition-colors"
+                  >
+                    <MapPin className="h-4 w-4" />
+                    <span className="text-sm">{project.location}</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <button
+              onClick={onClose}
+              className="bg-white bg-opacity-20 p-2 rounded-lg hover:bg-opacity-30 transition-colors"
+            >
+              <X className="h-6 w-6" />
+            </button>
+          </div>
+        </div>
+
+        {/* Tabs */}
+        <div className="border-b border-gray-200">
+          <div className="flex">
+            {[
+              { id: 'overview', label: language === 'hi' ? 'अवलोकन' : 'Overview', icon: <Leaf className="h-4 w-4" /> },
+              { id: 'analytics', label: language === 'hi' ? 'विश्लेषण' : 'Analytics', icon: <BarChart3 className="h-4 w-4" /> },
+              { id: 'photos', label: language === 'hi' ? 'तस्वीरें' : 'Photos', icon: <Camera className="h-4 w-4" /> }
+            ].map(tab => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex items-center space-x-2 px-6 py-4 font-medium transition-colors ${
+                  activeTab === tab.id
+                    ? 'border-b-2 border-green-500 text-green-600 bg-green-50'
+                    : 'text-gray-600 hover:text-green-600 hover:bg-green-50'
+                }`}
+              >
+                {tab.icon}
+                <span>{tab.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="p-6 max-h-96 overflow-y-auto">
+          {activeTab === 'overview' && (
+            <div className="space-y-6">
+              {/* Stats Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-green-600 text-sm font-medium">
+                        {language === 'hi' ? 'कुल क्रेडिट्स' : 'Total Credits'}
+                      </p>
+                      <p className="text-2xl font-bold text-green-800">{project.carbonCredits.toFixed(1)}</p>
+                    </div>
+                    <Coins className="h-8 w-8 text-green-600" />
+                  </div>
+                </div>
+                
+                <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-blue-600 text-sm font-medium">
+                        {language === 'hi' ? 'क्षेत्रफल' : 'Area'}
+                      </p>
+                      <p className="text-2xl font-bold text-blue-800">{project.area} {language === 'hi' ? 'एकड़' : 'acres'}</p>
+                    </div>
+                    <MapPin className="h-8 w-8 text-blue-600" />
+                  </div>
+                </div>
+                
+                <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-yellow-600 text-sm font-medium">
+                        {language === 'hi' ? 'अनुमानित आय' : 'Estimated Income'}
+                      </p>
+                      <p className="text-2xl font-bold text-yellow-800">₹{(project.carbonCredits * 1500).toLocaleString('hi-IN')}</p>
+                    </div>
+                    <TrendingUp className="h-8 w-8 text-yellow-600" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Project Details */}
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <h4 className="font-bold text-gray-800 mb-3">
+                  {language === 'hi' ? 'प्रोजेक्ट विवरण' : 'Project Details'}
+                </h4>
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <span className="text-gray-600">{language === 'hi' ? 'फसल प्रकार:' : 'Crop Type:'}</span>
+                    <span className="ml-2 font-medium">{project.type === 'rice' ? (language === 'hi' ? 'धान' : 'Rice') : (language === 'hi' ? 'कृषि वानिकी' : 'Agroforestry')}</span>
+                  </div>
+                  <div>
+                    <span className="text-gray-600">{language === 'hi' ? 'अंतिम अपडेट:' : 'Last Updated:'}</span>
+                    <span className="ml-2 font-medium">{project.lastUpdated.toLocaleDateString(language === 'hi' ? 'hi-IN' : 'en-IN')}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'analytics' && (
+            <div className="space-y-6">
+              <div>
+                <h4 className="font-bold text-gray-800 mb-4 flex items-center">
+                  <TrendingUp className="h-5 w-5 mr-2 text-green-600" />
+                  {language === 'hi' ? 'कार्बन क्रेडिट्स की प्रगति' : 'Carbon Credits Progress'}
+                </h4>
+                <div className="bg-white p-4 rounded-lg border">
+                  <Line data={carbonData} options={{ responsive: true, maintainAspectRatio: false }} height={200} />
+                </div>
+              </div>
+              
+              <div>
+                <h4 className="font-bold text-gray-800 mb-4 flex items-center">
+                  <Coins className="h-5 w-5 mr-2 text-yellow-600" />
+                  {language === 'hi' ? 'मासिक आय' : 'Monthly Income'}
+                </h4>
+                <div className="bg-white p-4 rounded-lg border">
+                  <Bar data={incomeData} options={{ responsive: true, maintainAspectRatio: false }} height={200} />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'photos' && (
+            <div className="space-y-4">
+              <div className="flex justify-between items-center">
+                <h4 className="font-bold text-gray-800">
+                  {language === 'hi' ? 'खेत की तस्वीरें' : 'Farm Photos'}
+                </h4>
+                <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center space-x-2">
+                  <Camera className="h-4 w-4" />
+                  <span>{language === 'hi' ? 'नई तस्वीर जोड़ें' : 'Add Photo'}</span>
+                </button>
+              </div>
+              
+              {project.photos.length > 0 ? (
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  {project.photos.map((photo, index) => (
+                    <img
+                      key={index}
+                      src={photo}
+                      alt={`Farm photo ${index + 1}`}
+                      className="w-full h-32 object-cover rounded-lg border-2 border-gray-200 hover:border-green-300 transition-colors cursor-pointer"
+                    />
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-12 bg-gray-50 rounded-lg">
+                  <Camera className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                  <p className="text-gray-600">
+                    {language === 'hi' ? 'कोई तस्वीरें नहीं मिलीं' : 'No photos found'}
+                  </p>
+                  <p className="text-gray-500 text-sm">
+                    {language === 'hi' ? 'अपने खेत की तस्वीरें जोड़ें' : 'Add photos of your farm'}
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ProjectDetailModal;
