@@ -177,6 +177,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onUpdate }) => {
         <ProjectDetailModal
           project={project}
           onClose={() => setShowDetails(false)}
+          onUpdate={onUpdate}
         />
       )}
 

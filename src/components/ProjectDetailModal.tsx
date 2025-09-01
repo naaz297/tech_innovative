@@ -29,18 +29,20 @@ ChartJS.register(
 interface ProjectDetailModalProps {
   project: Project;
   onClose: () => void;
+  onUpdate?: (project: Project) => void;
 }
 
-const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, onClose }) => {
+const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, onClose, onUpdate }) => {
   const { language } = useLanguage();
   const [activeTab, setActiveTab] = useState('overview');
+  const [showMap, setShowMap] = useState(false);
 
   // Sample data for charts
   const carbonData = {
-    labels: ['जन', 'फर', 'मार', 'अप्र', 'मई', 'जून'],
+    labels: language === 'hi' ? ['जन', 'फर', 'मार', 'अप्र', 'मई', 'जून'] : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
     datasets: [
       {
-        label: 'कार्बन क्रेडिट्स (टन)',
+        label: language === 'hi' ? 'कार्बन क्रेडिट्स (टन)' : 'Carbon Credits (tons)',
         data: [2.1, 3.5, 4.8, 6.2, 8.1, 10.5],
         borderColor: 'rgb(34, 197, 94)',
         backgroundColor: 'rgba(34, 197, 94, 0.1)',
@@ -50,10 +52,10 @@ const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, onClos
   };
 
   const incomeData = {
-    labels: ['जन', 'फर', 'मार', 'अप्र', 'मई', 'जून'],
+    labels: language === 'hi' ? ['जन', 'फर', 'मार', 'अप्र', 'मई', 'जून'] : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
     datasets: [
       {
-        label: 'आय (₹)',
+        label: language === 'hi' ? 'आय (₹)' : 'Income (₹)',
         data: [3150, 5250, 7200, 9300, 12150, 15750],
         backgroundColor: 'rgba(34, 197, 94, 0.8)',
       },
@@ -61,9 +63,7 @@ const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, onClos
   };
 
   const openMap = () => {
-    // Open Google Maps with the project location
-    const encodedLocation = encodeURIComponent(project.location);
-    window.open(`https://www.google.com/maps/search/${encodedLocation}`, '_blank');
+    setShowMap(true);
   };
 
   const getCropIcon = (type: string) => {
@@ -270,6 +270,14 @@ const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, onClos
             </div>
           )}
         </div>
+
+        {/* Map Modal */}
+        {showMap && (
+          <MapModal
+            location={project.location}
+            onClose={() => setShowMap(false)}
+          />
+        )}
       </div>
     </div>
   );

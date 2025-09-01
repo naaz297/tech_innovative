@@ -22,6 +22,7 @@
     <style>
       body {
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+        overflow-x: hidden;
       }
       
       /* Loading animation */
@@ -37,6 +38,12 @@
       @keyframes spin {
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
+      }
+
+      /* Remove center line */
+      .no-center-line {
+        border: none !important;
+        outline: none !important;
       }
     </style>
   </head>
@@ -87,6 +94,9 @@
     </div>
     <script type="module" src="/src/main.tsx"></script>
     <script>
+      // Declare global interfaces for speech recognition
+      window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      
       // Hide loading screen when app loads
       window.addEventListener('load', () => {
         setTimeout(() => {

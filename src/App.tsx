@@ -5,6 +5,8 @@ import Navbar from './components/Navbar';
 import CarbonCalculator from './components/CarbonCalculator';
 import EducationPanel from './components/EducationPanel';
 import Footer from './components/Footer';
+import VoiceAssistant from './components/VoiceAssistant';
+import LanguageDetector from './components/LanguageDetector';
 import { Project } from './types/Project';
 import { LanguageProvider } from './contexts/LanguageContext';
 
@@ -58,6 +60,7 @@ function App() {
 
   return (
     <LanguageProvider>
+      <LanguageDetector />
       <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-100 flex flex-col">
         <Navbar />
         
@@ -83,6 +86,8 @@ function App() {
         </main>
 
         <Footer />
+
+        <VoiceAssistant />
 
         {showAddProject && (
           <AddProjectModal
