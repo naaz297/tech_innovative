@@ -1,9 +1,10 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 interface LanguageContextType {
-  language: 'hi' | 'en';
-  setLanguage: (lang: 'hi' | 'en') => void;
+  language: 'hi' | 'en' | 'bn' | 'ta' | 'te' | 'mr' | 'gu' | 'kn' | 'ml' | 'pa' | 'or' | 'as';
+  setLanguage: (lang: 'hi' | 'en' | 'bn' | 'ta' | 'te' | 'mr' | 'gu' | 'kn' | 'ml' | 'pa' | 'or' | 'as') => void;
   t: (key: string) => string;
+  getLanguageName: (code: string) => string;
 }
 
 const translations = {
@@ -11,7 +12,7 @@ const translations = {
     // Navigation
     'nav.title': 'AgriCarbon MRV',
     'nav.subtitle': 'कृषि कार्बन ट्रैकिंग',
-    'nav.farmer': 'किसान राम',
+    'nav.account': 'Innovative Mind',
     
     // Dashboard
     'dashboard.title': 'आपका कार्बन डैशबोर्ड',
@@ -64,7 +65,7 @@ const translations = {
     // Navigation
     'nav.title': 'AgriCarbon MRV',
     'nav.subtitle': 'Agricultural Carbon Tracking',
-    'nav.farmer': 'Farmer Ram',
+    'nav.account': 'Innovative Mind',
     
     // Dashboard
     'dashboard.title': 'Your Carbon Dashboard',
@@ -112,20 +113,147 @@ const translations = {
     'footer.support': 'Support',
     'footer.faq': 'FAQ',
     'footer.rights': '© 2025 Innovative Mind. All rights reserved.'
+  },
+  bn: {
+    'nav.title': 'AgriCarbon MRV',
+    'nav.subtitle': 'কৃষি কার্বন ট্র্যাকিং',
+    'nav.account': 'Innovative Mind',
+    'dashboard.title': 'আপনার কার্বন ড্যাশবোর্ড',
+    'dashboard.addProject': 'নতুন প্রকল্প যোগ করুন',
+    'stats.totalCredits': 'মোট কার্বন ক্রেডিট',
+    'footer.company': 'Innovative Mind',
+    'footer.about': 'আমাদের সম্পর্কে'
+  },
+  ta: {
+    'nav.title': 'AgriCarbon MRV',
+    'nav.subtitle': 'விவசாய கார்பன் கண்காணிப்பு',
+    'nav.account': 'Innovative Mind',
+    'dashboard.title': 'உங்கள் கார்பன் டாஷ்போர்டு',
+    'dashboard.addProject': 'புதிய திட்டத்தைச் சேர்க்கவும்',
+    'stats.totalCredits': 'மொத்த கார்பன் கிரெடிட்கள்',
+    'footer.company': 'Innovative Mind',
+    'footer.about': 'எங்களைப் பற்றி'
+  },
+  te: {
+    'nav.title': 'AgriCarbon MRV',
+    'nav.subtitle': 'వ్యవసాయ కార్బన్ ట్రాకింగ్',
+    'nav.account': 'Innovative Mind',
+    'dashboard.title': 'మీ కార్బన్ డాష్‌బోర్డ్',
+    'dashboard.addProject': 'కొత్త ప్రాజెక్ట్ జోడించండి',
+    'stats.totalCredits': 'మొత్తం కార్బన్ క్రెడిట్లు',
+    'footer.company': 'Innovative Mind',
+    'footer.about': 'మా గురించి'
+  },
+  mr: {
+    'nav.title': 'AgriCarbon MRV',
+    'nav.subtitle': 'कृषी कार्बन ट्रॅकिंग',
+    'nav.account': 'Innovative Mind',
+    'dashboard.title': 'तुमचा कार्बन डॅशबोर्ड',
+    'dashboard.addProject': 'नवा प्रकल्प जोडा',
+    'stats.totalCredits': 'एकूण कार्बन क्रेडिट्स',
+    'footer.company': 'Innovative Mind',
+    'footer.about': 'आमच्याबद्दल'
+  },
+  gu: {
+    'nav.title': 'AgriCarbon MRV',
+    'nav.subtitle': 'કૃષિ કાર્બન ટ્રેકિંગ',
+    'nav.account': 'Innovative Mind',
+    'dashboard.title': 'તમારું કાર્બન ડેશબોર્ડ',
+    'dashboard.addProject': 'નવો પ્રોજેક્ટ ઉમેરો',
+    'stats.totalCredits': 'કુલ કાર્બન ક્રેડિટ્સ',
+    'footer.company': 'Innovative Mind',
+    'footer.about': 'અમારા વિશે'
+  },
+  kn: {
+    'nav.title': 'AgriCarbon MRV',
+    'nav.subtitle': 'ಕೃಷಿ ಕಾರ್ಬನ್ ಟ್ರ್ಯಾಕಿಂಗ್',
+    'nav.account': 'Innovative Mind',
+    'dashboard.title': 'ನಿಮ್ಮ ಕಾರ್ಬನ್ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್',
+    'dashboard.addProject': 'ಹೊಸ ಯೋಜನೆ ಸೇರಿಸಿ',
+    'stats.totalCredits': 'ಒಟ್ಟು ಕಾರ್ಬನ್ ಕ್ರೆಡಿಟ್‌ಗಳು',
+    'footer.company': 'Innovative Mind',
+    'footer.about': 'ನಮ್ಮ ಬಗ್ಗೆ'
+  },
+  ml: {
+    'nav.title': 'AgriCarbon MRV',
+    'nav.subtitle': 'കാർഷിക കാർബൺ ട്രാക്കിംഗ്',
+    'nav.account': 'Innovative Mind',
+    'dashboard.title': 'നിങ്ങളുടെ കാർബൺ ഡാഷ്ബോർഡ്',
+    'dashboard.addProject': 'പുതിയ പ്രോജക്റ്റ് ചേർക്കുക',
+    'stats.totalCredits': 'മൊത്തം കാർബൺ ക്രെഡിറ്റുകൾ',
+    'footer.company': 'Innovative Mind',
+    'footer.about': 'ഞങ്ങളെക്കുറിച്ച്'
+  },
+  pa: {
+    'nav.title': 'AgriCarbon MRV',
+    'nav.subtitle': 'ਖੇਤੀਬਾੜੀ ਕਾਰਬਨ ਟਰੈਕਿੰਗ',
+    'nav.account': 'Innovative Mind',
+    'dashboard.title': 'ਤੁਹਾਡਾ ਕਾਰਬਨ ਡੈਸ਼ਬੋਰਡ',
+    'dashboard.addProject': 'ਨਵਾਂ ਪ੍ਰੋਜੈਕਟ ਜੋੜੋ',
+    'stats.totalCredits': 'ਕੁੱਲ ਕਾਰਬਨ ਕ੍ਰੈਡਿਟਸ',
+    'footer.company': 'Innovative Mind',
+    'footer.about': 'ਸਾਡੇ ਬਾਰੇ'
+  },
+  or: {
+    'nav.title': 'AgriCarbon MRV',
+    'nav.subtitle': 'କୃଷି କାର୍ବନ ଟ୍ରାକିଂ',
+    'nav.account': 'Innovative Mind',
+    'dashboard.title': 'ଆପଣଙ୍କ କାର୍ବନ ଡ୍ୟାସବୋର୍ଡ',
+    'dashboard.addProject': 'ନୂତନ ପ୍ରକଳ୍ପ ଯୋଗ କରନ୍ତୁ',
+    'stats.totalCredits': 'ମୋଟ କାର୍ବନ କ୍ରେଡିଟ',
+    'footer.company': 'Innovative Mind',
+    'footer.about': 'ଆମ ବିଷୟରେ'
+  },
+  as: {
+    'nav.title': 'AgriCarbon MRV',
+    'nav.subtitle': 'কৃষি কাৰ্বন ট্ৰেকিং',
+    'nav.account': 'Innovative Mind',
+    'dashboard.title': 'আপোনাৰ কাৰ্বন ডেছবৰ্ড',
+    'dashboard.addProject': 'নতুন প্ৰকল্প যোগ কৰক',
+    'stats.totalCredits': 'মুঠ কাৰ্বন ক্ৰেডিট',
+    'footer.company': 'Innovative Mind',
+    'footer.about': 'আমাৰ বিষয়ে'
   }
 };
+
+// Add English and other language fallbacks
+Object.keys(translations).forEach(lang => {
+  if (lang !== 'hi' && lang !== 'en') {
+    translations[lang] = { ...translations.en, ...translations[lang] };
+  }
+});
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [language, setLanguage] = useState<'hi' | 'en'>('hi');
+  const [language, setLanguage] = useState<'hi' | 'en' | 'bn' | 'ta' | 'te' | 'mr' | 'gu' | 'kn' | 'ml' | 'pa' | 'or' | 'as'>('hi');
 
   const t = (key: string): string => {
-    return translations[language][key as keyof typeof translations['hi']] || key;
+    return translations[language]?.[key as keyof typeof translations['hi']] || 
+           translations.en[key as keyof typeof translations['en']] || 
+           key;
+  };
+
+  const getLanguageName = (code: string): string => {
+    const names = {
+      'hi': 'हिंदी',
+      'en': 'English',
+      'bn': 'বাংলা',
+      'ta': 'தமிழ்',
+      'te': 'తెలుగు',
+      'mr': 'मराठी',
+      'gu': 'ગુજરાતી',
+      'kn': 'ಕನ್ನಡ',
+      'ml': 'മലയാളം',
+      'pa': 'ਪੰਜਾਬੀ',
+      'or': 'ଓଡ଼ିଆ',
+      'as': 'অসমীয়া'
+    };
+    return names[code as keyof typeof names] || code;
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage, t, getLanguageName }}>
       {children}
     </LanguageContext.Provider>
   );

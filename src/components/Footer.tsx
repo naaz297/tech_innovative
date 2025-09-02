@@ -1,30 +1,33 @@
 import React, { useState } from 'react';
-import { Leaf, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Youtube, Users, HelpCircle, X } from 'lucide-react';
+import { Leaf, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Youtube, Users, HelpCircle, X, ExternalLink, Download } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const Footer = () => {
   const { language, t } = useLanguage();
   const [showAboutUs, setShowAboutUs] = useState(false);
   const [showHelpCenter, setShowHelpCenter] = useState(false);
+  const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
+  const [showTerms, setShowTerms] = useState(false);
+  const [showContact, setShowContact] = useState(false);
 
   const teamMembers = [
     {
       name: 'Naaz',
       department: 'B.Tech CSE',
       role: language === 'hi' ? 'मुख्य डेवलपर' : 'Lead Developer',
-      image: 'https://images.pexels.com/photos/3769021/pexels-photo-3769021.jpeg?auto=compress&cs=tinysrgb&w=300'
+      description: language === 'hi' ? 'कंप्यूटर साइंस में विशेषज्ञ, AI और मशीन लर्निंग में अनुभवी' : 'Computer Science expert, experienced in AI and Machine Learning'
     },
     {
       name: 'Noor', 
-      department: 'B.Tech EEN',
-      role: language === 'hi' ? 'इलेक्ट्रॉनिक्स इंजीनियर' : 'Electronics Engineer',
-      image: 'https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=300'
+      department: 'B.Tech Electrical Engineering',
+      role: language === 'hi' ? 'इलेक्ट्रिकल इंजीनियर' : 'Electrical Engineer',
+      description: language === 'hi' ? 'IoT सेंसर और हार्डवेयर डिज़ाइन में विशेषज्ञ' : 'Expert in IoT sensors and hardware design'
     },
     {
       name: 'Adiba',
       department: 'B.Tech CSE', 
       role: language === 'hi' ? 'सॉफ्टवेयर इंजीनियर' : 'Software Engineer',
-      image: 'https://images.pexels.com/photos/3769021/pexels-photo-3769021.jpeg?auto=compress&cs=tinysrgb&w=300'
+      description: language === 'hi' ? 'वेब डेवलपमेंट और डेटाबेस मैनेजमेंट में कुशल' : 'Skilled in web development and database management'
     }
   ];
 
@@ -32,46 +35,76 @@ const Footer = () => {
     {
       title: language === 'hi' ? '🌾 प्रोजेक्ट कैसे जोड़ें?' : '🌾 How to Add Project?',
       content: language === 'hi' 
-        ? 'ऊपर "नया प्रोजेक्ट जोड़ें" बटन दबाएं, अपने खेत की जानकारी भरें, तस्वीरें लें और सबमिट करें।'
-        : 'Click "Add New Project" button, fill your farm details, take photos and submit.'
+        ? 'ऊपर "नया प्रोजेक्ट जोड़ें" बटन दबाएं, अपने खेत की जानकारी भरें, तस्वीरें लें और सबमिट करें। यह प्रक्रिया सिर्फ 5 मिनट में पूरी हो जाती है।'
+        : 'Click "Add New Project" button, fill your farm details, take photos and submit. This process completes in just 5 minutes.',
+      steps: [
+        language === 'hi' ? '1. हरा बटन दबाएं' : '1. Press green button',
+        language === 'hi' ? '2. खेत की जानकारी भरें' : '2. Fill farm details',
+        language === 'hi' ? '3. तस्वीरें लें' : '3. Take photos',
+        language === 'hi' ? '4. सबमिट करें' : '4. Submit'
+      ]
     },
     {
       title: language === 'hi' ? '📸 तस्वीरें कैसे लें?' : '📸 How to Take Photos?',
       content: language === 'hi'
         ? 'कैमरा बटन दबाएं, खेत को फ्रेम के बीच में रखें, और कैप्चर बटन दबाएं। अच्छी रोशनी में फोटो लें।'
-        : 'Press camera button, keep farm in center of frame, and press capture. Take photos in good lighting.'
+        : 'Press camera button, keep farm in center of frame, and press capture. Take photos in good lighting.',
+      steps: [
+        language === 'hi' ? '1. कैमरा बटन दबाएं' : '1. Press camera button',
+        language === 'hi' ? '2. खेत को बीच में रखें' : '2. Keep farm in center',
+        language === 'hi' ? '3. अच्छी रोशनी में लें' : '3. Take in good light',
+        language === 'hi' ? '4. कैप्चर दबाएं' : '4. Press capture'
+      ]
     },
     {
       title: language === 'hi' ? '💰 पैसे कैसे कमाएं?' : '💰 How to Earn Money?',
       content: language === 'hi'
         ? 'अपना प्रोजेक्ट रजिस्टर करें, नियमित अपडेट दें, कार्बन क्रेडिट्स कमाएं और उन्हें बेचकर पैसे कमाएं।'
-        : 'Register your project, give regular updates, earn carbon credits and sell them to earn money.'
+        : 'Register your project, give regular updates, earn carbon credits and sell them to earn money.',
+      steps: [
+        language === 'hi' ? '1. प्रोजेक्ट रजिस्टर करें' : '1. Register project',
+        language === 'hi' ? '2. मासिक अपडेट दें' : '2. Give monthly updates',
+        language === 'hi' ? '3. क्रेडिट्स कमाएं' : '3. Earn credits',
+        language === 'hi' ? '4. पैसे पाएं' : '4. Get money'
+      ]
     },
     {
       title: language === 'hi' ? '🗺️ मैप कैसे देखें?' : '🗺️ How to View Map?',
       content: language === 'hi'
         ? 'किसी भी प्रोजेक्ट कार्ड पर लोकेशन पर क्लिक करें या "मैप देखें" बटन दबाएं।'
-        : 'Click on location in any project card or press "View Map" button.'
+        : 'Click on location in any project card or press "View Map" button.',
+      steps: [
+        language === 'hi' ? '1. प्रोजेक्ट कार्ड खोलें' : '1. Open project card',
+        language === 'hi' ? '2. लोकेशन पर क्लिक करें' : '2. Click on location',
+        language === 'hi' ? '3. मैप देखें' : '3. View map',
+        language === 'hi' ? '4. दिशा-निर्देश लें' : '4. Get directions'
+      ]
     },
     {
       title: language === 'hi' ? '🔊 आवाज़ की सुविधा' : '🔊 Voice Feature',
       content: language === 'hi'
         ? 'माइक बटन दबाकर बोलें, आपकी आवाज़ टेक्स्ट में बदल जाएगी। स्पीकर बटन दबाकर सुनें।'
-        : 'Press mic button to speak, your voice will convert to text. Press speaker button to listen.'
+        : 'Press mic button to speak, your voice will convert to text. Press speaker button to listen.',
+      steps: [
+        language === 'hi' ? '1. माइक बटन दबाएं' : '1. Press mic button',
+        language === 'hi' ? '2. स्पष्ट आवाज़ में बोलें' : '2. Speak clearly',
+        language === 'hi' ? '3. जवाब सुनें' : '3. Listen to answer',
+        language === 'hi' ? '4. स्पीकर से सुनें' : '4. Listen via speaker'
+      ]
     }
   ];
 
   const quickLinks = [
     { key: 'footer.about', href: '#about', onClick: () => setShowAboutUs(true) },
-    { key: 'footer.contact', href: '#contact' },
-    { key: 'footer.privacy', href: '#privacy' },
-    { key: 'footer.terms', href: '#terms' }
+    { key: 'footer.contact', href: '#contact', onClick: () => setShowContact(true) },
+    { key: 'footer.privacy', href: '#privacy', onClick: () => setShowPrivacyPolicy(true) },
+    { key: 'footer.terms', href: '#terms', onClick: () => setShowTerms(true) }
   ];
 
   const supportLinks = [
     { key: 'footer.support', href: '#support' },
     { key: 'footer.faq', href: '#faq' },
-    { key: 'Help Center', href: '#help', onClick: () => setShowHelpCenter(true) },
+    { key: language === 'hi' ? 'सहायता केंद्र' : 'Help Center', href: '#help', onClick: () => setShowHelpCenter(true) },
     { key: language === 'hi' ? 'ट्यूटोरियल' : 'Tutorials', href: '#tutorials' }
   ];
 
@@ -96,6 +129,12 @@ const Footer = () => {
       url: 'https://youtube.com/@innovativemind',
       name: 'YouTube'
     }
+  ];
+
+  const agricultureNumbers = [
+    { label: language === 'hi' ? 'कृषि हेल्पलाइन' : 'Agriculture Helpline', number: '+91 6246-789-012' },
+    { label: language === 'hi' ? 'तकनीकी सहायता' : 'Technical Support', number: '+91 6246-789-013' },
+    { label: language === 'hi' ? 'कार्बन क्रेडिट सहायता' : 'Carbon Credit Support', number: '+91 6246-789-014' }
   ];
 
   return (
@@ -161,6 +200,7 @@ const Footer = () => {
                     >
                       <span className="w-1 h-1 bg-green-400 rounded-full"></span>
                       <span>{t(link.key)}</span>
+                      <ExternalLink className="h-3 w-3" />
                     </button>
                   </li>
                 ))}
@@ -181,6 +221,7 @@ const Footer = () => {
                     >
                       <span className="w-1 h-1 bg-green-400 rounded-full"></span>
                       <span>{typeof link.key === 'string' && link.key.includes('.') ? t(link.key) : link.key}</span>
+                      <ExternalLink className="h-3 w-3" />
                     </button>
                   </li>
                 ))}
@@ -193,13 +234,20 @@ const Footer = () => {
                 {language === 'hi' ? 'संपर्क जानकारी' : 'Contact Info'}
               </h4>
               <div className="space-y-3">
-                <a 
-                  href="tel:+916246789012"
-                  className="flex items-center space-x-3 text-green-200 hover:text-white transition-colors"
-                >
-                  <Phone className="h-4 w-4" />
-                  <span className="text-sm">+91 6246-789-012</span>
-                </a>
+                {agricultureNumbers.map((contact, index) => (
+                  <a 
+                    key={index}
+                    href={`tel:${contact.number}`}
+                    className="flex items-center space-x-3 text-green-200 hover:text-white transition-colors group"
+                  >
+                    <Phone className="h-4 w-4 group-hover:scale-110 transition-transform" />
+                    <div>
+                      <p className="text-xs text-green-300">{contact.label}</p>
+                      <p className="text-sm font-medium">{contact.number}</p>
+                    </div>
+                  </a>
+                ))}
+                
                 <a 
                   href="mailto:support@innovativemind.in"
                   className="flex items-center space-x-3 text-green-200 hover:text-white transition-colors"
@@ -211,8 +259,8 @@ const Footer = () => {
                   <MapPin className="h-4 w-4 mt-0.5" />
                   <span className="text-sm">
                     {language === 'hi' 
-                      ? 'नई दिल्ली, भारत' 
-                      : 'New Delhi, India'
+                      ? 'कोलकाता, पश्चिम बंगाल, भारत' 
+                      : 'Kolkata, West Bengal, India'
                     }
                   </span>
                 </div>
@@ -231,6 +279,7 @@ const Footer = () => {
                     className="block bg-black bg-opacity-30 hover:bg-opacity-40 px-3 py-2 rounded-lg transition-colors"
                   >
                     <div className="flex items-center space-x-2">
+                      <Download className="h-4 w-4" />
                       <div className="text-xs">
                         <p className="text-green-200">Download on the</p>
                         <p className="font-bold">App Store</p>
@@ -244,6 +293,7 @@ const Footer = () => {
                     className="block bg-black bg-opacity-30 hover:bg-opacity-40 px-3 py-2 rounded-lg transition-colors"
                   >
                     <div className="flex items-center space-x-2">
+                      <Download className="h-4 w-4" />
                       <div className="text-xs">
                         <p className="text-green-200">Get it on</p>
                         <p className="font-bold">Google Play</p>
@@ -264,12 +314,12 @@ const Footer = () => {
                 {t('footer.rights')}
               </p>
               <div className="flex items-center space-x-6 text-sm text-green-200">
-                <a href="#privacy" className="hover:text-white transition-colors">
+                <button onClick={() => setShowPrivacyPolicy(true)} className="hover:text-white transition-colors">
                   {language === 'hi' ? 'गोपनीयता' : 'Privacy'}
-                </a>
-                <a href="#terms" className="hover:text-white transition-colors">
+                </button>
+                <button onClick={() => setShowTerms(true)} className="hover:text-white transition-colors">
                   {language === 'hi' ? 'नियम' : 'Terms'}
-                </a>
+                </button>
                 <a href="#cookies" className="hover:text-white transition-colors">
                   {language === 'hi' ? 'कुकीज़' : 'Cookies'}
                 </a>
@@ -324,14 +374,13 @@ const Footer = () => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {teamMembers.map((member, index) => (
                   <div key={index} className="bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-xl border-2 border-green-200 text-center hover:shadow-lg transition-all transform hover:scale-105">
-                    <img
-                      src={member.image}
-                      alt={member.name}
-                      className="w-20 h-20 rounded-full mx-auto mb-4 object-cover border-4 border-white shadow-lg"
-                    />
+                    <div className="w-20 h-20 rounded-full mx-auto mb-4 bg-gradient-to-r from-green-400 to-emerald-500 flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+                      {member.name.charAt(0)}
+                    </div>
                     <h5 className="text-xl font-bold text-gray-800 mb-1">{member.name}</h5>
                     <p className="text-green-600 font-medium text-sm mb-2">{member.department}</p>
-                    <p className="text-gray-600 text-sm">{member.role}</p>
+                    <p className="text-gray-600 text-sm mb-3">{member.role}</p>
+                    <p className="text-gray-500 text-xs leading-relaxed">{member.description}</p>
                   </div>
                 ))}
               </div>
@@ -355,7 +404,7 @@ const Footer = () => {
       {/* Help Center Modal */}
       {showHelpCenter && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[80vh] overflow-y-auto">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[80vh] overflow-y-auto">
             <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-6 text-white">
               <div className="flex justify-between items-center">
                 <div className="flex items-center space-x-3">
@@ -383,7 +432,15 @@ const Footer = () => {
                 {helpTips.map((tip, index) => (
                   <div key={index} className="bg-gradient-to-r from-gray-50 to-gray-100 p-6 rounded-xl border border-gray-200 hover:shadow-lg transition-all">
                     <h5 className="text-lg font-bold text-gray-800 mb-3">{tip.title}</h5>
-                    <p className="text-gray-700 leading-relaxed">{tip.content}</p>
+                    <p className="text-gray-700 leading-relaxed mb-4">{tip.content}</p>
+                    <div className="space-y-2">
+                      {tip.steps.map((step, stepIndex) => (
+                        <div key={stepIndex} className="flex items-center space-x-2 text-sm text-green-700 bg-green-50 p-2 rounded">
+                          <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                          <span>{step}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -394,26 +451,114 @@ const Footer = () => {
                 </h5>
                 <p className="text-gray-700 mb-4">
                   {language === 'hi'
-                    ? 'हमारी सहायता टीम से संपर्क करें। हम हिंदी और अंग्रेजी दोनों में सहायता प्रदान करते हैं।'
-                    : 'Contact our support team. We provide assistance in both Hindi and English.'
+                    ? 'हमारी सहायता टीम से संपर्क करें। हम सभी भारतीय भाषाओं में सहायता प्रदान करते हैं।'
+                    : 'Contact our support team. We provide assistance in all Indian languages.'
                   }
                 </p>
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <a
-                    href="tel:+916246789012"
-                    className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center justify-center space-x-2"
-                  >
-                    <Phone className="h-4 w-4" />
-                    <span>{language === 'hi' ? 'कॉल करें' : 'Call Us'}</span>
-                  </a>
-                  <a
-                    href="mailto:support@innovativemind.in"
-                    className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center justify-center space-x-2"
-                  >
-                    <Mail className="h-4 w-4" />
-                    <span>{language === 'hi' ? 'ईमेल करें' : 'Email Us'}</span>
-                  </a>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  {agricultureNumbers.map((contact, index) => (
+                    <a
+                      key={index}
+                      href={`tel:${contact.number}`}
+                      className="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg font-medium transition-colors flex items-center justify-center space-x-2 text-sm"
+                    >
+                      <Phone className="h-4 w-4" />
+                      <span>{contact.label}</span>
+                    </a>
+                  ))}
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Contact Modal */}
+      {showContact && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full">
+            <div className="bg-gradient-to-r from-green-500 to-emerald-600 p-6 text-white">
+              <div className="flex justify-between items-center">
+                <h3 className="text-2xl font-bold">{language === 'hi' ? 'संपर्क करें' : 'Contact Us'}</h3>
+                <button onClick={() => setShowContact(false)} className="bg-white bg-opacity-20 p-2 rounded-lg">
+                  <X className="h-6 w-6" />
+                </button>
+              </div>
+            </div>
+            <div className="p-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <h4 className="font-bold text-gray-800">{language === 'hi' ? 'कृषि सहायता नंबर' : 'Agriculture Support Numbers'}</h4>
+                  {agricultureNumbers.map((contact, index) => (
+                    <a key={index} href={`tel:${contact.number}`} className="block p-3 bg-green-50 rounded-lg hover:bg-green-100 transition-colors">
+                      <p className="font-medium text-green-800">{contact.label}</p>
+                      <p className="text-green-600">{contact.number}</p>
+                    </a>
+                  ))}
+                </div>
+                <div className="space-y-4">
+                  <h4 className="font-bold text-gray-800">{language === 'hi' ? 'अन्य संपर्क' : 'Other Contact'}</h4>
+                  <div className="p-3 bg-blue-50 rounded-lg">
+                    <p className="font-medium text-blue-800">{language === 'hi' ? 'ईमेल सहायता' : 'Email Support'}</p>
+                    <a href="mailto:support@innovativemind.in" className="text-blue-600">support@innovativemind.in</a>
+                  </div>
+                  <div className="p-3 bg-purple-50 rounded-lg">
+                    <p className="font-medium text-purple-800">{language === 'hi' ? 'कार्यालय पता' : 'Office Address'}</p>
+                    <p className="text-purple-600">{language === 'hi' ? 'कोलकाता, पश्चिम बंगाल' : 'Kolkata, West Bengal'}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Privacy Policy Modal */}
+      {showPrivacyPolicy && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[80vh] overflow-y-auto">
+            <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-6 text-white">
+              <div className="flex justify-between items-center">
+                <h3 className="text-2xl font-bold">{language === 'hi' ? 'गोपनीयता नीति' : 'Privacy Policy'}</h3>
+                <button onClick={() => setShowPrivacyPolicy(false)} className="bg-white bg-opacity-20 p-2 rounded-lg">
+                  <X className="h-6 w-6" />
+                </button>
+              </div>
+            </div>
+            <div className="p-8">
+              <div className="prose max-w-none">
+                <p className="text-gray-700 leading-relaxed">
+                  {language === 'hi'
+                    ? 'हम आपकी व्यक्तिगत जानकारी की सुरक्षा को गंभीरता से लेते हैं। आपका डेटा केवल कार्बन क्रेडिट गणना और भुगतान के लिए उपयोग किया जाता है।'
+                    : 'We take the security of your personal information seriously. Your data is only used for carbon credit calculation and payments.'
+                  }
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Terms Modal */}
+      {showTerms && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[80vh] overflow-y-auto">
+            <div className="bg-gradient-to-r from-green-500 to-emerald-600 p-6 text-white">
+              <div className="flex justify-between items-center">
+                <h3 className="text-2xl font-bold">{language === 'hi' ? 'नियम और शर्तें' : 'Terms & Conditions'}</h3>
+                <button onClick={() => setShowTerms(false)} className="bg-white bg-opacity-20 p-2 rounded-lg">
+                  <X className="h-6 w-6" />
+                </button>
+              </div>
+            </div>
+            <div className="p-8">
+              <div className="prose max-w-none">
+                <p className="text-gray-700 leading-relaxed">
+                  {language === 'hi'
+                    ? 'इस प्लेटफॉर्म का उपयोग करके आप हमारी नियम और शर्तों से सहमत होते हैं। कार्बन क्रेडिट्स की गणना वैज्ञानिक तरीकों पर आधारित है।'
+                    : 'By using this platform, you agree to our terms and conditions. Carbon credit calculations are based on scientific methods.'
+                  }
+                </p>
               </div>
             </div>
           </div>

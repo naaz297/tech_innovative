@@ -1,5 +1,5 @@
 import React, { useRef, useState, useCallback } from 'react';
-import { Camera, RotateCcw, Check, X, Zap } from 'lucide-react';
+import { Camera, RotateCcw, Check, X, Zap, Grid3X3, Focus } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 interface CameraCaptureProps {
@@ -15,6 +15,8 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({ onCapture, onClose }) => 
   const [capturedPhoto, setCapturedPhoto] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [facingMode, setFacingMode] = useState<'user' | 'environment'>('environment');
+  const [showGrid, setShowGrid] = useState(true);
+  const [flashEnabled, setFlashEnabled] = useState(false);
 
   const startCamera = useCallback(async () => {
     try {
@@ -25,28 +27,32 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({ onCapture, onClose }) => 
         stream.getTracks().forEach(track => track.stop());
       }
 
-      const mediaStream = await navigator.mediaDevices.getUserMedia({
+      const constraints = {
         video: { 
           facingMode: facingMode,
-          width: { ideal: 1920 },
-          height: { ideal: 1080 }
+          width: { ideal: 1920, min: 1280 },
+          height: { ideal: 1080, min: 720 }
         }
-      });
+      };
+
+      const mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
       
       setStream(mediaStream);
       if (videoRef.current) {
         videoRef.current.srcObject = mediaStream;
+        videoRef.current.onloadedmetadata = () => {
+          setIsLoading(false);
+        };
       }
-      setIsLoading(false);
     } catch (error) {
       console.error('Error accessing camera:', error);
       alert(language === 'hi' 
-        ? 'कैमरा एक्सेस नहीं हो सका। कृपया अनुमति दें।' 
-        : 'Could not access camera. Please allow permission.'
+        ? 'कैमरा एक्सेस नहीं हो सका। कृपया अनुमति दें और फिर कोशिश करें।' 
+        : 'Could not access camera. Please allow permission and try again.'
       );
-      onClose();
+      setIsLoading(false);
     }
-  }, [facingMode, stream, onClose, language]);
+  }, [facingMode, stream, language]);
 
   React.useEffect(() => {
     startCamera();
@@ -57,7 +63,7 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({ onCapture, onClose }) => 
     };
   }, [startCamera]);
 
-  const capturePhoto = () => {
+  const capturePhoto = async () => {
     if (videoRef.current && canvasRef.current) {
       const canvas = canvasRef.current;
       const video = videoRef.current;
@@ -67,8 +73,25 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({ onCapture, onClose }) => 
       canvas.height = video.videoHeight;
       
       if (context) {
+        // Apply flash effect if enabled
+        if (flashEnabled) {
+          const flashDiv = document.createElement('div');
+          flashDiv.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 9999;
+            pointer-events: none;
+          `;
+          document.body.appendChild(flashDiv);
+          setTimeout(() => document.body.removeChild(flashDiv), 100);
+        }
+
         context.drawImage(video, 0, 0);
-        const photoData = canvas.toDataURL('image/jpeg', 0.9);
+        const photoData = canvas.toDataURL('image/jpeg', 0.95);
         setCapturedPhoto(photoData);
       }
     }
@@ -100,12 +123,28 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({ onCapture, onClose }) => 
           <h3 className="text-lg font-bold">
             {language === 'hi' ? '📸 खेत की तस्वीर लें' : '📸 Take Farm Photo'}
           </h3>
-          <button
-            onClick={onClose}
-            className="bg-white bg-opacity-20 p-2 rounded-lg hover:bg-opacity-30 transition-colors"
-          >
-            <X className="h-5 w-5" />
-          </button>
+          <div className="flex items-center space-x-2">
+            <button
+              onClick={() => setShowGrid(!showGrid)}
+              className="bg-white bg-opacity-20 p-2 rounded-lg hover:bg-opacity-30 transition-colors"
+              title={language === 'hi' ? 'ग्रिड टॉगल करें' : 'Toggle grid'}
+            >
+              <Grid3X3 className="h-5 w-5" />
+            </button>
+            <button
+              onClick={() => setFlashEnabled(!flashEnabled)}
+              className={`p-2 rounded-lg transition-colors ${flashEnabled ? 'bg-yellow-500' : 'bg-white bg-opacity-20 hover:bg-opacity-30'}`}
+              title={language === 'hi' ? 'फ्लैश टॉगल करें' : 'Toggle flash'}
+            >
+              <Zap className="h-5 w-5" />
+            </button>
+            <button
+              onClick={onClose}
+              className="bg-white bg-opacity-20 p-2 rounded-lg hover:bg-opacity-30 transition-colors"
+            >
+              <X className="h-5 w-5" />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -114,7 +153,7 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({ onCapture, onClose }) => 
         {isLoading ? (
           <div className="flex items-center justify-center h-full bg-gray-900">
             <div className="text-white text-center">
-              <Camera className="h-16 w-16 mx-auto mb-4 animate-pulse" />
+              <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-white mx-auto mb-4"></div>
               <p className="text-lg">
                 {language === 'hi' ? 'कैमरा लोड हो रहा है...' : 'Loading camera...'}
               </p>
@@ -146,24 +185,46 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({ onCapture, onClose }) => 
             {!capturedPhoto && (
               <div className="absolute inset-0 pointer-events-none">
                 {/* Grid Lines */}
-                <div className="absolute inset-0 grid grid-cols-3 grid-rows-3 opacity-30">
-                  {Array.from({ length: 9 }).map((_, i) => (
-                    <div key={i} className="border border-white border-opacity-50" />
-                  ))}
-                </div>
+                {showGrid && (
+                  <div className="absolute inset-0 grid grid-cols-3 grid-rows-3 opacity-30">
+                    {Array.from({ length: 9 }).map((_, i) => (
+                      <div key={i} className="border border-white border-opacity-50" />
+                    ))}
+                  </div>
+                )}
                 
                 {/* Center Focus */}
                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                  <div className="w-32 h-32 border-2 border-white border-opacity-70 rounded-lg"></div>
+                  <div className="w-40 h-40 border-2 border-white border-opacity-70 rounded-lg flex items-center justify-center">
+                    <Focus className="h-8 w-8 text-white opacity-70" />
+                  </div>
                 </div>
 
                 {/* Instructions */}
                 <div className="absolute top-4 left-4 right-4">
-                  <div className="bg-black bg-opacity-50 p-3 rounded-lg text-white text-center">
-                    <p className="text-sm">
+                  <div className="bg-black bg-opacity-60 p-4 rounded-lg text-white text-center">
+                    <p className="text-sm font-medium mb-1">
                       {language === 'hi' 
                         ? '🌾 खेत को फ्रेम के बीच में रखें' 
                         : '🌾 Keep the farm in the center of frame'
+                      }
+                    </p>
+                    <p className="text-xs text-gray-300">
+                      {language === 'hi'
+                        ? 'अच्छी रोशनी में साफ तस्वीर लें'
+                        : 'Take clear photo in good lighting'
+                      }
+                    </p>
+                  </div>
+                </div>
+
+                {/* Camera Info */}
+                <div className="absolute bottom-20 left-4 right-4">
+                  <div className="bg-black bg-opacity-60 p-3 rounded-lg text-white text-center">
+                    <p className="text-xs">
+                      {language === 'hi' 
+                        ? `कैमरा: ${facingMode === 'environment' ? 'पीछे' : 'सामने'} | गुणवत्ता: उच्च | फ्लैश: ${flashEnabled ? 'चालू' : 'बंद'}`
+                        : `Camera: ${facingMode === 'environment' ? 'Back' : 'Front'} | Quality: High | Flash: ${flashEnabled ? 'On' : 'Off'}`
                       }
                     </p>
                   </div>
@@ -181,6 +242,7 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({ onCapture, onClose }) => 
             <button
               onClick={onClose}
               className="bg-gray-600 hover:bg-gray-700 text-white p-4 rounded-full transition-colors"
+              title={language === 'hi' ? 'बंद करें' : 'Close'}
             >
               <X className="h-6 w-6" />
             </button>
@@ -188,9 +250,13 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({ onCapture, onClose }) => 
             <button
               onClick={capturePhoto}
               disabled={isLoading}
-              className="bg-white hover:bg-gray-100 p-6 rounded-full transition-all transform hover:scale-110 disabled:opacity-50 shadow-lg"
+              className="bg-white hover:bg-gray-100 p-6 rounded-full transition-all transform hover:scale-110 disabled:opacity-50 shadow-lg relative"
+              title={language === 'hi' ? 'तस्वीर लें' : 'Take photo'}
             >
               <Camera className="h-8 w-8 text-gray-800" />
+              {flashEnabled && (
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-400 rounded-full"></div>
+              )}
             </button>
             
             <button
@@ -225,12 +291,12 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({ onCapture, onClose }) => 
           </div>
         )}
 
-        {/* Camera Info */}
+        {/* Camera Tips */}
         <div className="text-center mt-4">
           <p className="text-gray-400 text-xs">
             {language === 'hi' 
-              ? `कैमरा: ${facingMode === 'environment' ? 'पीछे' : 'सामने'} | गुणवत्ता: उच्च`
-              : `Camera: ${facingMode === 'environment' ? 'Back' : 'Front'} | Quality: High`
+              ? '💡 टिप: खेत का पूरा दृश्य लें, फसल साफ दिखनी चाहिए'
+              : '💡 Tip: Take full view of farm, crops should be clearly visible'
             }
           </p>
         </div>

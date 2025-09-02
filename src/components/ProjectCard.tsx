@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, MapPin, Coins, Camera, MoreVertical, TrendingUp } from 'lucide-react';
+import { Calendar, MapPin, Coins, Camera, MoreVertical, TrendingUp, BarChart3 } from 'lucide-react';
 import { Project } from '../types/Project';
 import { useLanguage } from '../contexts/LanguageContext';
 import ProjectDetailModal from './ProjectDetailModal';
@@ -165,9 +165,10 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onUpdate }) => {
           {/* Action Button */}
           <button
             onClick={() => setShowDetails(true)}
-            className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white py-3 rounded-lg font-medium transition-all transform hover:scale-105 shadow-lg hover:shadow-xl"
+            className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white py-3 rounded-lg font-medium transition-all transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2"
           >
-            {language === 'hi' ? 'विवरण देखें' : 'View Details'}
+            <BarChart3 className="h-5 w-5" />
+            <span>{language === 'hi' ? 'विवरण और ग्राफ देखें' : 'View Details & Graphs'}</span>
           </button>
         </div>
       </div>

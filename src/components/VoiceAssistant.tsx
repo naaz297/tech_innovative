@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Mic, MicOff, Volume2, VolumeX } from 'lucide-react';
+import { Mic, MicOff, Volume2, VolumeX, MessageCircle } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 interface VoiceAssistantProps {
@@ -11,6 +11,7 @@ const VoiceAssistant: React.FC<VoiceAssistantProps> = ({ onVoiceInput }) => {
   const [isListening, setIsListening] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [transcript, setTranscript] = useState('');
+  const [response, setResponse] = useState('');
   const [recognition, setRecognition] = useState<SpeechRecognition | null>(null);
 
   useEffect(() => {
@@ -20,7 +21,7 @@ const VoiceAssistant: React.FC<VoiceAssistantProps> = ({ onVoiceInput }) => {
       
       recognitionInstance.continuous = false;
       recognitionInstance.interimResults = true;
-      recognitionInstance.lang = language === 'hi' ? 'hi-IN' : 'en-IN';
+      recognitionInstance.lang = getLanguageCode(language);
 
       recognitionInstance.onstart = () => {
         setIsListening(true);
@@ -31,8 +32,11 @@ const VoiceAssistant: React.FC<VoiceAssistantProps> = ({ onVoiceInput }) => {
         const transcript = event.results[current][0].transcript;
         setTranscript(transcript);
         
-        if (event.results[current].isFinal && onVoiceInput) {
-          onVoiceInput(transcript);
+        if (event.results[current].isFinal) {
+          processVoiceCommand(transcript);
+          if (onVoiceInput) {
+            onVoiceInput(transcript);
+          }
         }
       };
 
@@ -49,8 +53,72 @@ const VoiceAssistant: React.FC<VoiceAssistantProps> = ({ onVoiceInput }) => {
     }
   }, [language, onVoiceInput]);
 
+  const getLanguageCode = (lang: string) => {
+    const langCodes: { [key: string]: string } = {
+      'hi': 'hi-IN',
+      'en': 'en-IN',
+      'bn': 'bn-IN',
+      'ta': 'ta-IN',
+      'te': 'te-IN',
+      'mr': 'mr-IN',
+      'gu': 'gu-IN',
+      'kn': 'kn-IN',
+      'ml': 'ml-IN',
+      'pa': 'pa-IN',
+      'or': 'or-IN',
+      'as': 'as-IN'
+    };
+    return langCodes[lang] || 'hi-IN';
+  };
+
+  const processVoiceCommand = (command: string) => {
+    const lowerCommand = command.toLowerCase();
+    let responseText = '';
+
+    // Carbon credit related questions
+    if (lowerCommand.includes('carbon') || lowerCommand.includes('कार्बन') || lowerCommand.includes('credit')) {
+      responseText = language === 'hi' 
+        ? 'कार्बन क्रेडिट्स आपको पर्यावरण की रक्षा करने के लिए पैसे देते हैं। धान की खेती से 3.5 टन प्रति एकड़ प्रति वर्ष मिलता है।'
+        : 'Carbon credits pay you for protecting the environment. Rice farming gives 3.5 tons per acre per year.';
+    }
+    // Income related questions
+    else if (lowerCommand.includes('income') || lowerCommand.includes('money') || lowerCommand.includes('पैसे') || lowerCommand.includes('आय')) {
+      responseText = language === 'hi'
+        ? 'आप कार्बन क्रेडिट्स से महीने में 5000 से 15000 रुपये कमा सकते हैं। यह आपके खेत के आकार पर निर्भर करता है।'
+        : 'You can earn 5000 to 15000 rupees monthly from carbon credits. It depends on your farm size.';
+    }
+    // How to add project
+    else if (lowerCommand.includes('project') || lowerCommand.includes('add') || lowerCommand.includes('प्रोजेक्ट') || lowerCommand.includes('जोड़')) {
+      responseText = language === 'hi'
+        ? 'नया प्रोजेक्ट जोड़ने के लिए हरे रंग का बटन दबाएं, अपने खेत की जानकारी भरें और तस्वीरें लें।'
+        : 'To add new project, press the green button, fill your farm details and take photos.';
+    }
+    // Help with camera
+    else if (lowerCommand.includes('camera') || lowerCommand.includes('photo') || lowerCommand.includes('कैमरा') || lowerCommand.includes('तस्वीर')) {
+      responseText = language === 'hi'
+        ? 'कैमरा खोलने के लिए कैमरा बटन दबाएं। खेत को बीच में रखें और कैप्चर बटन दबाएं।'
+        : 'Press camera button to open camera. Keep farm in center and press capture button.';
+    }
+    // General help
+    else if (lowerCommand.includes('help') || lowerCommand.includes('मदद') || lowerCommand.includes('सहायता')) {
+      responseText = language === 'hi'
+        ? 'मैं आपकी कार्बन क्रेडिट्स, प्रोजेक्ट जोड़ने, और पैसे कमाने में मदद कर सकता हूं। क्या चाहिए?'
+        : 'I can help you with carbon credits, adding projects, and earning money. What do you need?';
+    }
+    else {
+      responseText = language === 'hi'
+        ? 'मैं आपकी कार्बन क्रेडिट्स की सहायता के लिए यहां हूं। आप मुझसे प्रोजेक्ट, पैसे, या कैमरा के बारे में पूछ सकते हैं।'
+        : 'I am here to help with your carbon credits. You can ask me about projects, money, or camera.';
+    }
+
+    setResponse(responseText);
+    speakText(responseText);
+  };
+
   const startListening = () => {
     if (recognition) {
+      setTranscript('');
+      setResponse('');
       recognition.start();
     }
   };
@@ -65,7 +133,7 @@ const VoiceAssistant: React.FC<VoiceAssistantProps> = ({ onVoiceInput }) => {
     if ('speechSynthesis' in window) {
       setIsSpeaking(true);
       const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = language === 'hi' ? 'hi-IN' : 'en-IN';
+      utterance.lang = getLanguageCode(language);
       utterance.rate = 0.8;
       utterance.pitch = 1;
       
@@ -91,9 +159,22 @@ const VoiceAssistant: React.FC<VoiceAssistantProps> = ({ onVoiceInput }) => {
   return (
     <div className="fixed bottom-6 right-6 z-40">
       <div className="flex flex-col items-end space-y-3">
+        {/* Voice Response Display */}
+        {response && (
+          <div className="bg-white rounded-xl shadow-lg p-4 max-w-sm border-2 border-green-200">
+            <div className="flex items-center space-x-2 mb-2">
+              <MessageCircle className="h-4 w-4 text-green-600" />
+              <span className="text-sm font-medium text-gray-700">
+                {language === 'hi' ? 'सहायक का जवाब:' : 'Assistant Response:'}
+              </span>
+            </div>
+            <p className="text-gray-800 text-sm leading-relaxed">{response}</p>
+          </div>
+        )}
+
         {/* Voice Input Display */}
         {(isListening || transcript) && (
-          <div className="bg-white rounded-xl shadow-lg p-4 max-w-xs border-2 border-green-200">
+          <div className="bg-white rounded-xl shadow-lg p-4 max-w-xs border-2 border-blue-200">
             <div className="flex items-center space-x-2 mb-2">
               <div className={`w-3 h-3 rounded-full ${isListening ? 'bg-red-500 animate-pulse' : 'bg-green-500'}`}></div>
               <span className="text-sm font-medium text-gray-700">
@@ -114,7 +195,7 @@ const VoiceAssistant: React.FC<VoiceAssistantProps> = ({ onVoiceInput }) => {
             onClick={() => isSpeaking ? stopSpeaking() : speakText(welcomeMessage)}
             className={`p-4 rounded-full shadow-lg transition-all transform hover:scale-110 ${
               isSpeaking 
-                ? 'bg-red-500 hover:bg-red-600 text-white' 
+                ? 'bg-red-500 hover:bg-red-600 text-white animate-pulse' 
                 : 'bg-blue-500 hover:bg-blue-600 text-white'
             }`}
             title={language === 'hi' ? 'सहायता सुनें' : 'Listen to help'}
@@ -142,6 +223,12 @@ const VoiceAssistant: React.FC<VoiceAssistantProps> = ({ onVoiceInput }) => {
             {language === 'hi' 
               ? '🎤 बोलकर सहायता लें | 🔊 सुनकर समझें'
               : '🎤 Get help by speaking | 🔊 Listen to understand'
+            }
+          </p>
+          <p className="text-xs text-green-600 mt-1">
+            {language === 'hi'
+              ? 'पूछें: "कार्बन क्रेडिट्स कैसे कमाएं?"'
+              : 'Ask: "How to earn carbon credits?"'
             }
           </p>
         </div>
