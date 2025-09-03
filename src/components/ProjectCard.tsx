@@ -9,14 +9,16 @@ import DateTimePicker from './DateTimePicker';
 interface ProjectCardProps {
   project: Project;
   onUpdate?: (project: Project) => void;
+  onDelete?: (projectId: string) => void;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project, onUpdate }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ project, onUpdate, onDelete }) => {
   const { language, t } = useLanguage();
   const [showDetails, setShowDetails] = useState(false);
   const [showMap, setShowMap] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -43,6 +45,12 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onUpdate }) => {
     }
   };
 
+  const handleDelete = () => {
+    if (onDelete) {
+      onDelete(project.id);
+    }
+    setShowDeleteConfirm(false);
+  };
   return (
     <>
       <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden border border-gray-100">
@@ -100,6 +108,15 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onUpdate }) => {
                 className="w-full px-4 py-3 text-left text-gray-700 hover:bg-green-50 transition-colors text-sm border-t"
               >
                 {language === 'hi' ? 'समय अपडेट करें' : 'Update Time'}
+              </button>
+              <button
+                onClick={() => {
+                  setShowDeleteConfirm(true);
+                  setShowMenu(false);
+                }}
+                className="w-full px-4 py-3 text-left text-red-600 hover:bg-red-50 transition-colors text-sm border-t"
+              >
+                {language === 'hi' ? 'प्रोजेक्ट हटाएं' : 'Delete Project'}
               </button>
             </div>
           )}
@@ -197,6 +214,38 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onUpdate }) => {
         />
       )}
 
+      {/* Delete Confirmation Modal */}
+      {showDeleteConfirm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full">
+            <div className="bg-gradient-to-r from-red-500 to-red-600 p-6 text-white">
+              <h3 className="text-xl font-bold">{language === 'hi' ? 'प्रोजेक्ट हटाएं?' : 'Delete Project?'}</h3>
+            </div>
+            <div className="p-6">
+              <p className="text-gray-700 mb-6">
+                {language === 'hi' 
+                  ? 'क्या आप वाकई इस प्रोजेक्ट को हटाना चाहते हैं? यह क्रिया वापस नहीं की जा सकती।'
+                  : 'Are you sure you want to delete this project? This action cannot be undone.'
+                }
+              </p>
+              <div className="flex space-x-3">
+                <button
+                  onClick={() => setShowDeleteConfirm(false)}
+                  className="flex-1 px-4 py-3 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                  {language === 'hi' ? 'रद्द करें' : 'Cancel'}
+                </button>
+                <button
+                  onClick={handleDelete}
+                  className="flex-1 px-4 py-3 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
+                >
+                  {language === 'hi' ? 'हटाएं' : 'Delete'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       {/* Click outside to close menu */}
       {showMenu && (
         <div

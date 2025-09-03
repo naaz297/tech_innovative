@@ -9,6 +9,9 @@ const Footer = () => {
   const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
   const [showContact, setShowContact] = useState(false);
+  const [showSupport, setShowSupport] = useState(false);
+  const [showFAQ, setShowFAQ] = useState(false);
+  const [showTutorials, setShowTutorials] = useState(false);
 
   const teamMembers = [
     {
@@ -94,6 +97,60 @@ const Footer = () => {
     }
   ];
 
+  const faqItems = [
+    {
+      question: language === 'hi' ? 'कार्बन क्रेडिट्स क्या हैं?' : 'What are carbon credits?',
+      answer: language === 'hi' 
+        ? 'कार्बन क्रेडिट्स पर्यावरण की रक्षा के लिए मिलने वाले पैसे हैं। जब आप पेड़ लगाते हैं या टिकाऊ खेती करते हैं, तो आपको कार्बन क्रेडिट्स मिलते हैं जिन्हें बेचकर पैसे कमा सकते हैं।'
+        : 'Carbon credits are payments for protecting the environment. When you plant trees or do sustainable farming, you get carbon credits that can be sold for money.'
+    },
+    {
+      question: language === 'hi' ? 'कितने पैसे मिल सकते हैं?' : 'How much money can I earn?',
+      answer: language === 'hi'
+        ? 'धान की खेती से 3.5 टन/एकड़/वर्ष और कृषि वानिकी से 7.2 टन/एकड़/वर्ष कार्बन क्रेडिट्स मिलते हैं। वर्तमान दर ₹1500 प्रति टन है। 2 एकड़ धान से सालाना ₹10,500 कमा सकते हैं।'
+        : 'Rice farming gives 3.5 tons/acre/year and agroforestry gives 7.2 tons/acre/year. Current rate is ₹1500 per ton. You can earn ₹10,500 annually from 2 acres of rice.'
+    },
+    {
+      question: language === 'hi' ? 'क्या यह सुरक्षित है?' : 'Is this safe?',
+      answer: language === 'hi'
+        ? 'हां, यह पूरी तरह सुरक्षित है। हमारा सिस्टम ब्लॉकचेन तकनीक का उपयोग करता है जो पारदर्शी और सुरक्षित है। आपका डेटा एन्क्रिप्टेड रहता है।'
+        : 'Yes, it is completely safe. Our system uses blockchain technology which is transparent and secure. Your data remains encrypted.'
+    },
+    {
+      question: language === 'hi' ? 'पेमेंट कब मिलेगी?' : 'When will I get payment?',
+      answer: language === 'hi'
+        ? 'हर 3 महीने में आपको पेमेंट मिलेगी। पेमेंट सीधे आपके बैंक अकाउंट में UPI या NEFT के जरिए आएगी।'
+        : 'You will receive payment every 3 months. Payment comes directly to your bank account via UPI or NEFT.'
+    }
+  ];
+
+  const tutorials = [
+    {
+      title: language === 'hi' ? '🎥 प्रोजेक्ट रजिस्ट्रेशन गाइड' : '🎥 Project Registration Guide',
+      description: language === 'hi' ? '5 मिनट में सीखें कि कैसे अपना प्रोजेक्ट रजिस्टर करें' : 'Learn how to register your project in 5 minutes',
+      duration: '5 min',
+      type: 'video'
+    },
+    {
+      title: language === 'hi' ? '📱 मोबाइल ऐप का उपयोग' : '📱 Mobile App Usage',
+      description: language === 'hi' ? 'मोबाइल ऐप की सभी सुविधाओं का उपयोग करना सीखें' : 'Learn to use all mobile app features',
+      duration: '8 min',
+      type: 'video'
+    },
+    {
+      title: language === 'hi' ? '💰 पेमेंट प्रक्रिया' : '💰 Payment Process',
+      description: language === 'hi' ? 'कार्बन क्रेडिट्स कैसे बेचें और पैसे कैसे पाएं' : 'How to sell carbon credits and receive money',
+      duration: '6 min',
+      type: 'guide'
+    },
+    {
+      title: language === 'hi' ? '🌱 सस्टेनेबल फार्मिंग टिप्स' : '🌱 Sustainable Farming Tips',
+      description: language === 'hi' ? 'अधिक कार्बन क्रेडिट्स के लिए बेहतर खेती के तरीके' : 'Better farming methods for more carbon credits',
+      duration: '12 min',
+      type: 'guide'
+    }
+  ];
+
   const quickLinks = [
     { key: 'footer.about', href: '#about', onClick: () => setShowAboutUs(true) },
     { key: 'footer.contact', href: '#contact', onClick: () => setShowContact(true) },
@@ -102,39 +159,33 @@ const Footer = () => {
   ];
 
   const supportLinks = [
-    { key: 'footer.support', href: '#support' },
-    { key: 'footer.faq', href: '#faq' },
+    { key: 'footer.support', href: '#support', onClick: () => setShowSupport(true) },
+    { key: 'footer.faq', href: '#faq', onClick: () => setShowFAQ(true) },
     { key: language === 'hi' ? 'सहायता केंद्र' : 'Help Center', href: '#help', onClick: () => setShowHelpCenter(true) },
-    { key: language === 'hi' ? 'ट्यूटोरियल' : 'Tutorials', href: '#tutorials' }
+    { key: language === 'hi' ? 'ट्यूटोरियल' : 'Tutorials', href: '#tutorials', onClick: () => setShowTutorials(true) }
   ];
 
   const socialLinks = [
     { 
       icon: <Facebook className="h-5 w-5" />, 
-      url: 'https://facebook.com/innovativemind',
+      url: 'https://facebook.com/innovativemindtech',
       name: 'Facebook'
     },
     { 
       icon: <Twitter className="h-5 w-5" />, 
-      url: 'https://twitter.com/innovativemind',
+      url: 'https://twitter.com/innovativemindtech',
       name: 'Twitter'
     },
     { 
       icon: <Instagram className="h-5 w-5" />, 
-      url: 'https://instagram.com/innovativemind',
+      url: 'https://instagram.com/innovativemindtech',
       name: 'Instagram'
     },
     { 
       icon: <Youtube className="h-5 w-5" />, 
-      url: 'https://youtube.com/@innovativemind',
+      url: 'https://youtube.com/@innovativemindtech',
       name: 'YouTube'
     }
-  ];
-
-  const agricultureNumbers = [
-    { label: language === 'hi' ? 'कृषि हेल्पलाइन' : 'Agriculture Helpline', number: '+91 6246-789-012' },
-    { label: language === 'hi' ? 'तकनीकी सहायता' : 'Technical Support', number: '+91 6246-789-013' },
-    { label: language === 'hi' ? 'कार्बन क्रेडिट सहायता' : 'Carbon Credit Support', number: '+91 6246-789-014' }
   ];
 
   return (
@@ -234,19 +285,16 @@ const Footer = () => {
                 {language === 'hi' ? 'संपर्क जानकारी' : 'Contact Info'}
               </h4>
               <div className="space-y-3">
-                {agricultureNumbers.map((contact, index) => (
-                  <a 
-                    key={index}
-                    href={`tel:${contact.number}`}
-                    className="flex items-center space-x-3 text-green-200 hover:text-white transition-colors group"
-                  >
-                    <Phone className="h-4 w-4 group-hover:scale-110 transition-transform" />
-                    <div>
-                      <p className="text-xs text-green-300">{contact.label}</p>
-                      <p className="text-sm font-medium">{contact.number}</p>
-                    </div>
-                  </a>
-                ))}
+                <a 
+                  href="tel:+916246789012"
+                  className="flex items-center space-x-3 text-green-200 hover:text-white transition-colors group"
+                >
+                  <Phone className="h-4 w-4 group-hover:scale-110 transition-transform" />
+                  <div>
+                    <p className="text-xs text-green-300">{language === 'hi' ? 'कृषि हेल्पलाइन' : 'Agriculture Helpline'}</p>
+                    <p className="text-sm font-medium">+91 6246-789-012</p>
+                  </div>
+                </a>
                 
                 <a 
                   href="mailto:support@innovativemind.in"
@@ -401,6 +449,106 @@ const Footer = () => {
         </div>
       )}
 
+      {/* Support Modal */}
+      {showSupport && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[80vh] overflow-y-auto">
+            <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-6 text-white">
+              <div className="flex justify-between items-center">
+                <h3 className="text-2xl font-bold">{language === 'hi' ? 'सहायता' : 'Support'}</h3>
+                <button onClick={() => setShowSupport(false)} className="bg-white bg-opacity-20 p-2 rounded-lg">
+                  <X className="h-6 w-6" />
+                </button>
+              </div>
+            </div>
+            <div className="p-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <h4 className="font-bold text-gray-800">{language === 'hi' ? 'तकनीकी सहायता' : 'Technical Support'}</h4>
+                  <div className="p-4 bg-blue-50 rounded-lg">
+                    <p className="font-medium text-blue-800">{language === 'hi' ? 'ईमेल सहायता' : 'Email Support'}</p>
+                    <a href="mailto:support@innovativemind.in" className="text-blue-600">support@innovativemind.in</a>
+                  </div>
+                  <div className="p-4 bg-green-50 rounded-lg">
+                    <p className="font-medium text-green-800">{language === 'hi' ? 'फोन सहायता' : 'Phone Support'}</p>
+                    <a href="tel:+916246789012" className="text-green-600">+91 6246-789-012</a>
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  <h4 className="font-bold text-gray-800">{language === 'hi' ? 'सामान्य सहायता' : 'General Help'}</h4>
+                  <div className="p-4 bg-purple-50 rounded-lg">
+                    <p className="font-medium text-purple-800">{language === 'hi' ? 'कार्यालय पता' : 'Office Address'}</p>
+                    <p className="text-purple-600">{language === 'hi' ? 'कोलकाता, पश्चिम बंगाल' : 'Kolkata, West Bengal'}</p>
+                  </div>
+                  <div className="p-4 bg-yellow-50 rounded-lg">
+                    <p className="font-medium text-yellow-800">{language === 'hi' ? 'कार्य समय' : 'Working Hours'}</p>
+                    <p className="text-yellow-600">{language === 'hi' ? 'सोमवार - शुक्रवार: 9:00 - 18:00' : 'Monday - Friday: 9:00 - 18:00'}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* FAQ Modal */}
+      {showFAQ && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[80vh] overflow-y-auto">
+            <div className="bg-gradient-to-r from-purple-500 to-indigo-600 p-6 text-white">
+              <div className="flex justify-between items-center">
+                <h3 className="text-2xl font-bold">{language === 'hi' ? 'सामान्य प्रश्न' : 'Frequently Asked Questions'}</h3>
+                <button onClick={() => setShowFAQ(false)} className="bg-white bg-opacity-20 p-2 rounded-lg">
+                  <X className="h-6 w-6" />
+                </button>
+              </div>
+            </div>
+            <div className="p-8">
+              <div className="space-y-6">
+                {faqItems.map((faq, index) => (
+                  <div key={index} className="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                    <h5 className="text-lg font-bold text-gray-800 mb-3">{faq.question}</h5>
+                    <p className="text-gray-700 leading-relaxed">{faq.answer}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Tutorials Modal */}
+      {showTutorials && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[80vh] overflow-y-auto">
+            <div className="bg-gradient-to-r from-green-500 to-emerald-600 p-6 text-white">
+              <div className="flex justify-between items-center">
+                <h3 className="text-2xl font-bold">{language === 'hi' ? 'ट्यूटोरियल' : 'Tutorials'}</h3>
+                <button onClick={() => setShowTutorials(false)} className="bg-white bg-opacity-20 p-2 rounded-lg">
+                  <X className="h-6 w-6" />
+                </button>
+              </div>
+            </div>
+            <div className="p-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {tutorials.map((tutorial, index) => (
+                  <div key={index} className="bg-gradient-to-br from-gray-50 to-gray-100 p-6 rounded-xl border border-gray-200 hover:shadow-lg transition-all">
+                    <h5 className="text-lg font-bold text-gray-800 mb-2">{tutorial.title}</h5>
+                    <p className="text-gray-600 text-sm mb-4">{tutorial.description}</p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-gray-500">{tutorial.duration}</span>
+                      <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                        {language === 'hi' ? 'देखें' : 'Watch'}
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Help Center Modal */}
       {showHelpCenter && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
@@ -455,18 +603,13 @@ const Footer = () => {
                     : 'Contact our support team. We provide assistance in all Indian languages.'
                   }
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  {agricultureNumbers.map((contact, index) => (
-                    <a
-                      key={index}
-                      href={`tel:${contact.number}`}
-                      className="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg font-medium transition-colors flex items-center justify-center space-x-2 text-sm"
-                    >
-                      <Phone className="h-4 w-4" />
-                      <span>{contact.label}</span>
-                    </a>
-                  ))}
-                </div>
+                <a
+                  href="tel:+916246789012"
+                  className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center justify-center space-x-2"
+                >
+                  <Phone className="h-4 w-4" />
+                  <span>+91 6246-789-012</span>
+                </a>
               </div>
             </div>
           </div>
@@ -488,23 +631,25 @@ const Footer = () => {
             <div className="p-8">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
-                  <h4 className="font-bold text-gray-800">{language === 'hi' ? 'कृषि सहायता नंबर' : 'Agriculture Support Numbers'}</h4>
-                  {agricultureNumbers.map((contact, index) => (
-                    <a key={index} href={`tel:${contact.number}`} className="block p-3 bg-green-50 rounded-lg hover:bg-green-100 transition-colors">
-                      <p className="font-medium text-green-800">{contact.label}</p>
-                      <p className="text-green-600">{contact.number}</p>
-                    </a>
-                  ))}
-                </div>
-                <div className="space-y-4">
-                  <h4 className="font-bold text-gray-800">{language === 'hi' ? 'अन्य संपर्क' : 'Other Contact'}</h4>
-                  <div className="p-3 bg-blue-50 rounded-lg">
+                  <h4 className="font-bold text-gray-800">{language === 'hi' ? 'संपर्क विवरण' : 'Contact Details'}</h4>
+                  <div className="p-4 bg-green-50 rounded-lg">
+                    <p className="font-medium text-green-800">{language === 'hi' ? 'कृषि हेल्पलाइन' : 'Agriculture Helpline'}</p>
+                    <a href="tel:+916246789012" className="text-green-600 font-bold">+91 6246-789-012</a>
+                  </div>
+                  <div className="p-4 bg-blue-50 rounded-lg">
                     <p className="font-medium text-blue-800">{language === 'hi' ? 'ईमेल सहायता' : 'Email Support'}</p>
                     <a href="mailto:support@innovativemind.in" className="text-blue-600">support@innovativemind.in</a>
                   </div>
-                  <div className="p-3 bg-purple-50 rounded-lg">
-                    <p className="font-medium text-purple-800">{language === 'hi' ? 'कार्यालय पता' : 'Office Address'}</p>
-                    <p className="text-purple-600">{language === 'hi' ? 'कोलकाता, पश्चिम बंगाल' : 'Kolkata, West Bengal'}</p>
+                </div>
+                <div className="space-y-4">
+                  <h4 className="font-bold text-gray-800">{language === 'hi' ? 'कार्यालय पता' : 'Office Address'}</h4>
+                  <div className="p-4 bg-purple-50 rounded-lg">
+                    <p className="font-medium text-purple-800">{language === 'hi' ? 'मुख्य कार्यालय' : 'Head Office'}</p>
+                    <p className="text-purple-600">{language === 'hi' ? 'कोलकाता, पश्चिम बंगाल, भारत' : 'Kolkata, West Bengal, India'}</p>
+                  </div>
+                  <div className="p-4 bg-yellow-50 rounded-lg">
+                    <p className="font-medium text-yellow-800">{language === 'hi' ? 'कार्य समय' : 'Working Hours'}</p>
+                    <p className="text-yellow-600">{language === 'hi' ? 'सोमवार - शुक्रवार: 9:00 - 18:00' : 'Monday - Friday: 9:00 - 18:00'}</p>
                   </div>
                 </div>
               </div>

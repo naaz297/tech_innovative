@@ -2,12 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Remove center line from inputs */
+/* Remove center lines and outlines from inputs */
 input:focus,
 textarea:focus,
 select:focus {
   outline: none !important;
   box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2) !important;
+  border: 2px solid #22C55E !important;
+}
+
+/* Remove any default browser styling */
+input,
+textarea,
+select {
+  border: none;
+  outline: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
 }
 
 /* Custom scrollbar */

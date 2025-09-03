@@ -15,31 +15,48 @@ function App() {
   const [projects, setProjects] = useState<Project[]>([
     {
       id: '1',
-      name: 'राम का धान का खेत',
+      name: 'रामेश्वर का धान का खेत - सिकंदरपुर गांव',
       type: 'rice',
       area: 2.5,
-      location: 'मुजफ्फरनगर, उत्तर प्रदेश',
+      location: 'सिकंदरपुर, मुजफ्फरनगर, उत्तर प्रदेश',
       status: 'active',
       carbonCredits: 15.2,
       lastUpdated: new Date('2024-12-15'),
       photos: [
         'https://images.pexels.com/photos/2132227/pexels-photo-2132227.jpeg?auto=compress&cs=tinysrgb&w=800',
         'https://images.pexels.com/photos/1595104/pexels-photo-1595104.jpeg?auto=compress&cs=tinysrgb&w=800'
-      ]
+      ],
+      description: 'पारंपरिक धान की खेती के साथ जैविक तरीकों का उपयोग। मिट्टी की गुणवत्ता में सुधार और कार्बन संग्रहण बढ़ाने के लिए कवर क्रॉप्स का उपयोग।'
     },
     {
       id: '2',
-      name: 'श्याम का फलों का बगीचा',
+      name: 'श्यामा देवी का मिश्रित बगीचा - हरिहरपुर गांव',
       type: 'agroforestry',
       area: 1.8,
-      location: 'जालंधर, पंजाब',
+      location: 'हरिहरपुर, जालंधर, पंजाब',
       status: 'pending',
       carbonCredits: 8.7,
       lastUpdated: new Date('2024-12-10'),
       photos: [
         'https://images.pexels.com/photos/1459505/pexels-photo-1459505.jpeg?auto=compress&cs=tinysrgb&w=800',
         'https://images.pexels.com/photos/1459534/pexels-photo-1459534.jpeg?auto=compress&cs=tinysrgb&w=800'
-      ]
+      ],
+      description: 'आम, अमरूद और नीम के पेड़ों के साथ मिश्रित खेती। मधुमक्खी पालन और जैविक खाद का उत्पादन भी शामिल।'
+    },
+    {
+      id: '3',
+      name: 'गीता बेन का जैविक खेत - वडगाम गांव',
+      type: 'rice',
+      area: 3.2,
+      location: 'वडगाम, बनासकांठा, गुजरात',
+      status: 'active',
+      carbonCredits: 18.5,
+      lastUpdated: new Date('2024-12-12'),
+      photos: [
+        'https://images.pexels.com/photos/1595104/pexels-photo-1595104.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/2132227/pexels-photo-2132227.jpeg?auto=compress&cs=tinysrgb&w=800'
+      ],
+      description: 'पूर्णतः जैविक धान की खेती। वर्षा जल संचयन और ड्रिप सिंचाई का उपयोग। मिट्टी में कार्बन की मात्रा बढ़ाने के लिए हरी खाद का प्रयोग।'
     }
   ]);
 
@@ -58,6 +75,9 @@ function App() {
     );
   };
 
+  const handleDeleteProject = (projectId: string) => {
+    setProjects(prev => prev.filter(p => p.id !== projectId));
+  };
   return (
     <LanguageProvider>
       <LanguageDetector />
@@ -73,6 +93,7 @@ function App() {
                   projects={projects} 
                   onAddProject={() => setShowAddProject(true)}
                   onUpdateProject={handleUpdateProject}
+                  onDeleteProject={handleDeleteProject}
                 />
               </div>
               
