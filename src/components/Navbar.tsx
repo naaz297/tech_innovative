@@ -70,9 +70,9 @@ const Navbar = () => {
               </div>
 
               {/* User Profile */}
-              <button className="flex items-center space-x-2 bg-green-100 px-3 py-2 rounded-lg hover:bg-green-200 transition-colors">
+              <button className="flex items-center space-x-2 bg-gradient-to-r from-green-100 to-emerald-100 px-4 py-2 rounded-lg hover:from-green-200 hover:to-emerald-200 transition-all transform hover:scale-105 shadow-md">
                 <User className="h-5 w-5 text-green-600" />
-                <span className="text-sm font-medium text-green-800">{t('nav.account')}</span>
+                <span className="text-sm font-medium text-green-800">Innovative Mind</span>
               </button>
             </div>
           </div>

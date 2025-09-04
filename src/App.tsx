@@ -81,10 +81,19 @@ function App() {
   return (
     <LanguageProvider>
       <LanguageDetector />
-      <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-100 flex flex-col">
+      <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-100 flex flex-col relative overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-5 pointer-events-none">
+          <div className="absolute top-20 left-10 text-9xl">🌾</div>
+          <div className="absolute top-40 right-20 text-7xl">🌱</div>
+          <div className="absolute bottom-40 left-1/4 text-8xl">🌳</div>
+          <div className="absolute bottom-20 right-10 text-6xl">🍃</div>
+          <div className="absolute top-60 left-1/2 text-5xl">🌿</div>
+        </div>
+        
         <Navbar />
         
-        <main className="flex-1">
+        <main className="flex-1 relative z-10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Main Dashboard */}

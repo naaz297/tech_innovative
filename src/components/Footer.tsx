@@ -128,26 +128,46 @@ const Footer = () => {
     {
       title: language === 'hi' ? '🎥 प्रोजेक्ट रजिस्ट्रेशन गाइड' : '🎥 Project Registration Guide',
       description: language === 'hi' ? '5 मिनट में सीखें कि कैसे अपना प्रोजेक्ट रजिस्टर करें' : 'Learn how to register your project in 5 minutes',
-      duration: '5 min',
-      type: 'video'
+      steps: [
+        language === 'hi' ? 'हरा "नया प्रोजेक्ट जोड़ें" बटन दबाएं' : 'Click green "Add New Project" button',
+        language === 'hi' ? 'अपने खेत का नाम और फसल का प्रकार चुनें' : 'Enter farm name and select crop type',
+        language === 'hi' ? 'स्थान और क्षेत्रफल की जानकारी भरें' : 'Fill location and area information',
+        language === 'hi' ? 'खेत की तस्वीरें लें या गैलरी से चुनें' : 'Take farm photos or choose from gallery',
+        language === 'hi' ? '"प्रोजेक्ट जोड़ें" बटन दबाकर पूरा करें' : 'Complete by clicking "Add Project" button'
+      ]
     },
     {
       title: language === 'hi' ? '📱 मोबाइल ऐप का उपयोग' : '📱 Mobile App Usage',
       description: language === 'hi' ? 'मोबाइल ऐप की सभी सुविधाओं का उपयोग करना सीखें' : 'Learn to use all mobile app features',
-      duration: '8 min',
-      type: 'video'
+      steps: [
+        language === 'hi' ? 'ऐप डाउनलोड करें और अकाउंट बनाएं' : 'Download app and create account',
+        language === 'hi' ? 'अपनी भाषा चुनें और प्रोफाइल सेट करें' : 'Choose language and set up profile',
+        language === 'hi' ? 'कैमरा और लोकेशन की अनुमति दें' : 'Allow camera and location permissions',
+        language === 'hi' ? 'वॉइस असिस्टेंट का उपयोग करना सीखें' : 'Learn to use voice assistant',
+        language === 'hi' ? 'नियमित अपडेट और फोटो अपलोड करें' : 'Regular updates and photo uploads'
+      ]
     },
     {
       title: language === 'hi' ? '💰 पेमेंट प्रक्रिया' : '💰 Payment Process',
       description: language === 'hi' ? 'कार्बन क्रेडिट्स कैसे बेचें और पैसे कैसे पाएं' : 'How to sell carbon credits and receive money',
-      duration: '6 min',
-      type: 'guide'
+      steps: [
+        language === 'hi' ? 'प्रोजेक्ट को 3 महीने तक सक्रिय रखें' : 'Keep project active for 3 months',
+        language === 'hi' ? 'मासिक डेटा और फोटो अपडेट करें' : 'Update monthly data and photos',
+        language === 'hi' ? 'कार्बन क्रेडिट्स की गणना होगी' : 'Carbon credits will be calculated',
+        language === 'hi' ? 'बैंक अकाउंट की जानकारी दें' : 'Provide bank account details',
+        language === 'hi' ? 'UPI/NEFT से पेमेंट प्राप्त करें' : 'Receive payment via UPI/NEFT'
+      ]
     },
     {
       title: language === 'hi' ? '🌱 सस्टेनेबल फार्मिंग टिप्स' : '🌱 Sustainable Farming Tips',
       description: language === 'hi' ? 'अधिक कार्बन क्रेडिट्स के लिए बेहतर खेती के तरीके' : 'Better farming methods for more carbon credits',
-      duration: '12 min',
-      type: 'guide'
+      steps: [
+        language === 'hi' ? 'जैविक खाद का उपयोग करें' : 'Use organic fertilizers',
+        language === 'hi' ? 'कवर क्रॉप्स लगाएं' : 'Plant cover crops',
+        language === 'hi' ? 'पानी की बचत करें' : 'Conserve water',
+        language === 'hi' ? 'मिट्टी की जांच नियमित करें' : 'Regular soil testing',
+        language === 'hi' ? 'पेड़ लगाकर वानिकी करें' : 'Plant trees for agroforestry'
+      ]
     }
   ];
 
@@ -168,22 +188,22 @@ const Footer = () => {
   const socialLinks = [
     { 
       icon: <Facebook className="h-5 w-5" />, 
-      url: 'https://facebook.com/innovativemindtech',
+      url: 'https://facebook.com/innovativemind.tech',
       name: 'Facebook'
     },
     { 
       icon: <Twitter className="h-5 w-5" />, 
-      url: 'https://twitter.com/innovativemindtech',
+      url: 'https://twitter.com/innovativemind_tech',
       name: 'Twitter'
     },
     { 
       icon: <Instagram className="h-5 w-5" />, 
-      url: 'https://instagram.com/innovativemindtech',
+      url: 'https://instagram.com/innovativemind.tech',
       name: 'Instagram'
     },
     { 
       icon: <Youtube className="h-5 w-5" />, 
-      url: 'https://youtube.com/@innovativemindtech',
+      url: 'https://youtube.com/@innovativemind.tech',
       name: 'YouTube'
     }
   ];
@@ -292,7 +312,7 @@ const Footer = () => {
                   <Phone className="h-4 w-4 group-hover:scale-110 transition-transform" />
                   <div>
                     <p className="text-xs text-green-300">{language === 'hi' ? 'कृषि हेल्पलाइन' : 'Agriculture Helpline'}</p>
-                    <p className="text-sm font-medium">+91 6246-789-012</p>
+                    <p className="text-sm font-medium">+91 6246-×××-×××</p>
                   </div>
                 </a>
                 
@@ -315,41 +335,6 @@ const Footer = () => {
               </div>
 
               {/* App Download */}
-              <div className="mt-6">
-                <p className="text-sm font-medium mb-3">
-                  {language === 'hi' ? 'मोबाइल ऐप डाउनलोड करें:' : 'Download Mobile App:'}
-                </p>
-                <div className="space-y-2">
-                  <a
-                    href="https://apps.apple.com/app/agricarbon-mrv"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block bg-black bg-opacity-30 hover:bg-opacity-40 px-3 py-2 rounded-lg transition-colors"
-                  >
-                    <div className="flex items-center space-x-2">
-                      <Download className="h-4 w-4" />
-                      <div className="text-xs">
-                        <p className="text-green-200">Download on the</p>
-                        <p className="font-bold">App Store</p>
-                      </div>
-                    </div>
-                  </a>
-                  <a
-                    href="https://play.google.com/store/apps/details?id=com.innovativemind.agricarbon"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block bg-black bg-opacity-30 hover:bg-opacity-40 px-3 py-2 rounded-lg transition-colors"
-                  >
-                    <div className="flex items-center space-x-2">
-                      <Download className="h-4 w-4" />
-                      <div className="text-xs">
-                        <p className="text-green-200">Get it on</p>
-                        <p className="font-bold">Google Play</p>
-                      </div>
-                    </div>
-                  </a>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -471,7 +456,7 @@ const Footer = () => {
                   </div>
                   <div className="p-4 bg-green-50 rounded-lg">
                     <p className="font-medium text-green-800">{language === 'hi' ? 'फोन सहायता' : 'Phone Support'}</p>
-                    <a href="tel:+916246789012" className="text-green-600">+91 6246-789-012</a>
+                    <a href="tel:+916246789012" className="text-green-600">+91 6246-×××-×××</a>
                   </div>
                 </div>
                 <div className="space-y-4">
@@ -535,11 +520,15 @@ const Footer = () => {
                   <div key={index} className="bg-gradient-to-br from-gray-50 to-gray-100 p-6 rounded-xl border border-gray-200 hover:shadow-lg transition-all">
                     <h5 className="text-lg font-bold text-gray-800 mb-2">{tutorial.title}</h5>
                     <p className="text-gray-600 text-sm mb-4">{tutorial.description}</p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-gray-500">{tutorial.duration}</span>
-                      <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-                        {language === 'hi' ? 'देखें' : 'Watch'}
-                      </button>
+                    <div className="text-sm text-gray-700 leading-relaxed">
+                      {tutorial.steps && tutorial.steps.map((step, stepIndex) => (
+                        <div key={stepIndex} className="flex items-start space-x-2 mb-2">
+                          <span className="w-5 h-5 bg-green-500 text-white rounded-full flex items-center justify-center text-xs font-bold mt-0.5">
+                            {stepIndex + 1}
+                          </span>
+                          <span>{step}</span>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 ))}

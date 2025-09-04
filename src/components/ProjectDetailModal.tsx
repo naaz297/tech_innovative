@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { X, MapPin, Calendar, Camera, TrendingUp, Leaf, Coins, BarChart3 } from 'lucide-react';
+import { X, MapPin, Calendar, Camera, TrendingUp, Leaf, Coins, BarChart3, Upload, Plus } from 'lucide-react';
 import { Project } from '../types/Project';
 import { useLanguage } from '../contexts/LanguageContext';
+import CameraCapture from './CameraCapture';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -35,7 +36,24 @@ interface ProjectDetailModalProps {
 const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, onClose, onUpdate }) => {
   const { language } = useLanguage();
   const [activeTab, setActiveTab] = useState('overview');
-  const [showMap, setShowMap] = useState(false);
+  const [showCamera, setShowCamera] = useState(false);
+  const [projectPhotos, setProjectPhotos] = useState(project.photos);
+
+  const handlePhotoCapture = (photo: string) => {
+    const updatedPhotos = [...projectPhotos, photo];
+    setProjectPhotos(updatedPhotos);
+    if (onUpdate) {
+      onUpdate({ ...project, photos: updatedPhotos });
+    }
+  };
+
+  const handlePhotoDelete = (index: number) => {
+    const updatedPhotos = projectPhotos.filter((_, i) => i !== index);
+    setProjectPhotos(updatedPhotos);
+    if (onUpdate) {
+      onUpdate({ ...project, photos: updatedPhotos });
+    }
+  };
 
   // Sample data for charts
   const carbonData = {
@@ -239,25 +257,38 @@ const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, onClos
                 <h4 className="font-bold text-gray-800">
                   {language === 'hi' ? 'खेत की तस्वीरें' : 'Farm Photos'}
                 </h4>
-                <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center space-x-2">
+                <button 
+                  onClick={() => setShowCamera(true)}
+                  className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center space-x-2"
+                >
                   <Camera className="h-4 w-4" />
                   <span>{language === 'hi' ? 'नई तस्वीर जोड़ें' : 'Add Photo'}</span>
                 </button>
               </div>
               
-              {project.photos.length > 0 ? (
+              {projectPhotos.length > 0 ? (
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {project.photos.map((photo, index) => (
-                    <img
+                  {projectPhotos.map((photo, index) => (
+                    <div
                       key={index}
-                      src={photo}
-                      alt={`Farm photo ${index + 1}`}
-                      className="w-full h-32 object-cover rounded-lg border-2 border-gray-200 hover:border-green-300 transition-colors cursor-pointer"
-                    />
+                      className="relative group"
+                    >
+                      <img
+                        src={photo}
+                        alt={`Farm photo ${index + 1}`}
+                        className="w-full h-32 object-cover rounded-lg border-2 border-gray-200 hover:border-green-300 transition-colors cursor-pointer"
+                      />
+                      <button
+                        onClick={() => handlePhotoDelete(index)}
+                        className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600"
+                      >
+                        <X className="h-3 w-3" />
+                      </button>
+                    </div>
                   ))}
                 </div>
               ) : (
-                <div className="text-center py-12 bg-gray-50 rounded-lg">
+                <div className="text-center py-12 bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg border-2 border-dashed border-green-300">
                   <Camera className="h-12 w-12 text-gray-400 mx-auto mb-4" />
                   <p className="text-gray-600">
                     {language === 'hi' ? 'कोई तस्वीरें नहीं मिलीं' : 'No photos found'}
@@ -265,17 +296,24 @@ const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, onClos
                   <p className="text-gray-500 text-sm">
                     {language === 'hi' ? 'अपने खेत की तस्वीरें जोड़ें' : 'Add photos of your farm'}
                   </p>
+                  <button 
+                    onClick={() => setShowCamera(true)}
+                    className="mt-4 bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2 mx-auto"
+                  >
+                    <Plus className="h-4 w-4" />
+                    <span>{language === 'hi' ? 'पहली तस्वीर जोड़ें' : 'Add First Photo'}</span>
+                  </button>
                 </div>
               )}
             </div>
           )}
         </div>
 
-        {/* Map Modal */}
-        {showMap && (
-          <MapModal
-            location={project.location}
-            onClose={() => setShowMap(false)}
+        {/* Camera Modal */}
+        {showCamera && (
+          <CameraCapture
+            onCapture={handlePhotoCapture}
+            onClose={() => setShowCamera(false)}
           />
         )}
       </div>
