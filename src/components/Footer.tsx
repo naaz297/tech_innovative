@@ -30,7 +30,7 @@ const Footer = () => {
       name: 'Adiba',
       department: 'B.Tech CSE', 
       role: language === 'hi' ? 'सॉफ्टवेयर इंजीनियर' : 'Software Engineer',
-      description: language === 'hi' ? 'वेब डेवलपमेंट और डेटाबेस मैनेजमेंट में कुशल' : 'Skilled in web development and database management'
+      description: language === 'hi' ? 'वेब डेवलपमेंट और डेटा���ेस मैनेजमेंट में कुशल' : 'Skilled in web development and database management'
     }
   ];
 
@@ -48,7 +48,7 @@ const Footer = () => {
       ]
     },
     {
-      title: language === 'hi' ? '📸 तस्वीरें कैसे लें?' : '📸 How to Take Photos?',
+      title: language === 'hi' ? '📸 तस्वीरें कैसे लें?' : '�� How to Take Photos?',
       content: language === 'hi'
         ? 'कैमरा बटन दबाएं, खेत को फ्रेम के बीच में रखें, और कैप्चर बटन दबाएं। अच्छी रोशनी में फोटो लें।'
         : 'Press camera button, keep farm in center of frame, and press capture. Take photos in good lighting.',
@@ -101,7 +101,7 @@ const Footer = () => {
     {
       question: language === 'hi' ? 'कार्बन क्रेडिट्स क्या हैं?' : 'What are carbon credits?',
       answer: language === 'hi' 
-        ? 'कार्बन क्रेडिट्स पर्यावरण की रक्षा के लिए मिलने वाले पैसे हैं। जब आप पेड़ लगाते हैं या टिकाऊ खेती करते हैं, तो आपको कार्बन क्रेडिट्स मिलते हैं जिन्हें बेचकर पैसे कमा सकते हैं।'
+        ? 'कार्बन क्रेडिट्स पर्यावरण की रक्षा के लिए मिलने वाले पैसे हैं�� जब आप पेड़ लगाते हैं या टिकाऊ खेती करते हैं, तो आपको कार्बन क्रेडिट्स मिलते हैं जिन्हें बेचकर पैसे कमा सकते हैं।'
         : 'Carbon credits are payments for protecting the environment. When you plant trees or do sustainable farming, you get carbon credits that can be sold for money.'
     },
     {
@@ -111,7 +111,7 @@ const Footer = () => {
         : 'Rice farming gives 3.5 tons/acre/year and agroforestry gives 7.2 tons/acre/year. Current rate is ₹1500 per ton. You can earn ₹10,500 annually from 2 acres of rice.'
     },
     {
-      question: language === 'hi' ? 'क्या यह सुरक्षित है?' : 'Is this safe?',
+      question: language === 'hi' ? 'क्या यह सुरक्षित ह���?' : 'Is this safe?',
       answer: language === 'hi'
         ? 'हां, यह पूरी तरह सुरक्षित है। हमारा सिस्टम ब्लॉकचेन तकनीक का उपयोग करता है जो पारदर्शी और सुरक्षित है। आपका डेटा एन्क्रिप्टेड रहता है।'
         : 'Yes, it is completely safe. Our system uses blockchain technology which is transparent and secure. Your data remains encrypted.'
@@ -305,16 +305,13 @@ const Footer = () => {
                 {language === 'hi' ? 'संपर्क जानकारी' : 'Contact Info'}
               </h4>
               <div className="space-y-3">
-                <a 
-                  href="tel:+916246xxxxxx"
-                  className="flex items-center space-x-3 text-green-200 hover:text-white transition-colors group"
-                >
+                <div className="flex items-center space-x-3 text-green-200 group">
                   <Phone className="h-4 w-4 group-hover:scale-110 transition-transform" />
                   <div>
                     <p className="text-xs text-green-300">{language === 'hi' ? 'कृषि हेल्पलाइन' : 'Agriculture Helpline'}</p>
-                   <p className="text-sm font-medium">+91 6246xxxxxx</p>
+                    <p className="text-sm font-medium">6294XXXXXX</p>
                   </div>
-                </a>
+                </div>
                 
                 <a 
                   href="mailto:support@innovativemind.in"
@@ -337,7 +334,7 @@ const Footer = () => {
               {/* App Download */}
               <div className="bg-gradient-to-r from-purple-50 to-indigo-50 p-4 rounded-lg border border-purple-200">
                 <h5 className="font-medium text-purple-800 mb-3">
-                  {language === 'hi' ? '📱 वेब एप्लिकेशन' : '📱 Web Application'}
+                  {language === 'hi' ? '📱 वेब एप्ल���केशन' : '📱 Web Application'}
                 </h5>
                 <p className="text-purple-700 text-sm mb-3">
                   {language === 'hi' 
@@ -453,7 +450,7 @@ const Footer = () => {
                 </h5>
                 <p className="text-gray-700 leading-relaxed">
                   {language === 'hi'
-                    ? 'हमारा लक्ष्य है भारत के छोटे किसानों को कार्बन मार्केट से जोड़ना और उन्हें अतिरिक्त आय प्रदान करना। हम तकनीक का उपयोग करके पर्यावरण संरक्षण और किसान कल्याण दोनों को बढ़ावा देते हैं।'
+                    ? 'हमारा लक्ष्य है भारत के छोटे किसानों को कार्बन मार्केट से जोड़ना और उन्हें अतिरिक्त आय प्रदान करना। हम तकनीक का उपयोग करके पर्यावरण संरक्षण और किसा��� कल्याण दोनों को बढ़ावा देते हैं।'
                     : 'Our goal is to connect India\'s small farmers with carbon markets and provide them additional income. We use technology to promote both environmental conservation and farmer welfare.'
                   }
                 </p>
@@ -485,7 +482,7 @@ const Footer = () => {
                   </div>
                   <div className="p-4 bg-green-50 rounded-lg">
                     <p className="font-medium text-green-800">{language === 'hi' ? 'फोन सहायता' : 'Phone Support'}</p>
-                    <a href="tel:+916246789012" className="text-green-600">+91 6246-×××-×××</a>
+                    <span className="text-green-600">6294XXXXXX</span>
                   </div>
                 </div>
                 <div className="space-y-4">
@@ -621,13 +618,10 @@ const Footer = () => {
                     : 'Contact our support team. We provide assistance in all Indian languages.'
                   }
                 </p>
-                <a
-                  href="tel:+916246789012"
-                  className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center justify-center space-x-2"
-                >
+                <div className="bg-green-500 text-white px-6 py-3 rounded-lg font-medium flex items-center justify-center space-x-2">
                   <Phone className="h-4 w-4" />
-                  <span>+91 6246-789-012</span>
-                </a>
+                  <span>6294XXXXXX</span>
+                </div>
               </div>
             </div>
           </div>
@@ -652,7 +646,7 @@ const Footer = () => {
                   <h4 className="font-bold text-gray-800">{language === 'hi' ? 'संपर्क विवरण' : 'Contact Details'}</h4>
                   <div className="p-4 bg-green-50 rounded-lg">
                     <p className="font-medium text-green-800">{language === 'hi' ? 'कृषि हेल्पलाइन' : 'Agriculture Helpline'}</p>
-                    <a href="tel:+916246789012" className="text-green-600 font-bold">+91 6246-789-012</a>
+                    <span className="text-green-600 font-bold">6294XXXXXX</span>
                   </div>
                   <div className="p-4 bg-blue-50 rounded-lg">
                     <p className="font-medium text-blue-800">{language === 'hi' ? 'ईमेल सहायता' : 'Email Support'}</p>
