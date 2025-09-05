@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Project } from '../types/Project';
 import ProjectCard from './ProjectCard';
@@ -13,7 +13,7 @@ interface DashboardProps {
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ projects, onAddProject, onDeleteProject }) => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage(); // ✅ FIXED: include language
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [selectedStat, setSelectedStat] = useState<string | null>(null);
 
@@ -34,7 +34,7 @@ const Dashboard: React.FC<DashboardProps> = ({ projects, onAddProject, onDeleteP
 
     let content;
     switch (selectedStat) {
-      case 'credits':
+      case 'credits': {
         const avgCreditsPerProject = projects.length > 0 ? (totalCredits / projects.length).toFixed(1) : '0';
         const estimatedIncome = totalCredits * 50; // ₹50 per credit
         content = (
@@ -61,7 +61,8 @@ const Dashboard: React.FC<DashboardProps> = ({ projects, onAddProject, onDeleteP
           </div>
         );
         break;
-      case 'area':
+      }
+      case 'area': {
         const avgAreaPerProject = projects.length > 0 ? (totalArea / projects.length).toFixed(1) : '0';
         const largestFarm = projects.length > 0 ? Math.max(...projects.map(p => p.area)) : 0;
         content = (
@@ -88,7 +89,8 @@ const Dashboard: React.FC<DashboardProps> = ({ projects, onAddProject, onDeleteP
           </div>
         );
         break;
-      case 'active':
+      }
+      case 'active': {
         const completedProjects = projects.filter(p => p.status === 'completed').length;
         const successRate = projects.length > 0 ? ((completedProjects / projects.length) * 100).toFixed(1) : '0';
         content = (
@@ -115,6 +117,7 @@ const Dashboard: React.FC<DashboardProps> = ({ projects, onAddProject, onDeleteP
           </div>
         );
         break;
+      }
       default:
         content = null;
     }
@@ -157,7 +160,7 @@ const Dashboard: React.FC<DashboardProps> = ({ projects, onAddProject, onDeleteP
         />
         <StatsCard
           title={t('totalArea')}
-          value={`${totalArea} ${t('acres')}`}
+          value={${totalArea} ${t('acres')}}
           icon={<MapPin className="w-8 h-8" />}
           color="blue"
           onClick={() => handleStatClick('area')}
