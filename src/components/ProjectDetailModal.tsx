@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, MapPin, Calendar, Camera, TrendingUp, Leaf, Coins, BarChart3, Upload, Plus } from 'lucide-react';
+import { X, MapPin, Calendar, Camera, TrendingUp, Leaf, Coins, BarChart3, Upload, Plus, Image } from 'lucide-react';
 import { Project } from '../types/Project';
 import { useLanguage } from '../contexts/LanguageContext';
 import CameraCapture from './CameraCapture';
@@ -38,6 +38,7 @@ const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, onClos
   const [activeTab, setActiveTab] = useState('overview');
   const [showCamera, setShowCamera] = useState(false);
   const [projectPhotos, setProjectPhotos] = useState(project.photos);
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   const handlePhotoCapture = (photo: string) => {
     const updatedPhotos = [...projectPhotos, photo];
@@ -52,6 +53,30 @@ const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, onClos
     setProjectPhotos(updatedPhotos);
     if (onUpdate) {
       onUpdate({ ...project, photos: updatedPhotos });
+    }
+  };
+
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files) {
+      Array.from(files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const result = e.target?.result as string;
+          const updatedPhotos = [...projectPhotos, result];
+          setProjectPhotos(updatedPhotos);
+          if (onUpdate) {
+            onUpdate({ ...project, photos: updatedPhotos });
+          }
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+  };
+
+  const openGallery = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
     }
   };
 
@@ -257,13 +282,22 @@ const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, onClos
                 <h4 className="font-bold text-gray-800">
                   {language === 'hi' ? 'खेत की तस्वीरें' : 'Farm Photos'}
                 </h4>
-                <button 
-                  onClick={() => setShowCamera(true)}
-                  className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center space-x-2"
-                >
-                  <Camera className="h-4 w-4" />
-                  <span>{language === 'hi' ? 'नई तस्वीर जोड़ें' : 'Add Photo'}</span>
-                </button>
+                <div className="flex space-x-2">
+                  <button 
+                    onClick={() => setShowCamera(true)}
+                    className="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center space-x-1"
+                  >
+                    <Camera className="h-4 w-4" />
+                    <span>{language === 'hi' ? 'कैमरा' : 'Camera'}</span>
+                  </button>
+                  <button 
+                    onClick={openGallery}
+                    className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center space-x-1"
+                  >
+                    <Image className="h-4 w-4" />
+                    <span>{language === 'hi' ? 'गैलरी' : 'Gallery'}</span>
+                  </button>
+                </div>
               </div>
               
               {projectPhotos.length > 0 ? (
@@ -305,6 +339,16 @@ const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, onClos
                   </button>
                 </div>
               )}
+              
+              {/* Hidden file input */}
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleFileSelect}
+                className="hidden"
+                multiple
+              />
             </div>
           )}
         </div>

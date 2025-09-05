@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, MapPin, Coins, Camera, MoreVertical, TrendingUp, BarChart3 } from 'lucide-react';
+import { Calendar, MapPin, Coins, MoreVertical, TrendingUp, BarChart3 } from 'lucide-react';
 import { Project } from '../types/Project';
 import { useLanguage } from '../contexts/LanguageContext';
 import ProjectDetailModal from './ProjectDetailModal';
@@ -81,14 +81,15 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onUpdate, onDelete }
 
           {/* Dropdown Menu */}
           {showMenu && (
-            <div className="absolute right-4 top-16 bg-white rounded-lg shadow-xl z-10 min-w-[150px] border">
+            <div className="absolute right-4 top-16 bg-white rounded-lg shadow-xl z-10 min-w-[180px] border">
               <button
                 onClick={() => {
                   setShowDeleteConfirm(true);
                   setShowMenu(false);
                 }}
-                className="w-full px-4 py-3 text-left text-red-600 hover:bg-red-50 transition-colors text-sm"
+                className="w-full px-4 py-3 text-left text-red-600 hover:bg-red-50 transition-colors text-sm flex items-center space-x-2"
               >
+                <span>🗑️</span>
                 {language === 'hi' ? 'प्रोजेक्ट हटाएं' : 'Delete Project'}
               </button>
             </div>
@@ -155,29 +156,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onUpdate, onDelete }
           {/* Action Button */}
           <button
             onClick={() => setShowDetails(true)}
-            className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white py-3 rounded-lg font-medium transition-all transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2 mb-3"
+            className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white py-3 rounded-lg font-medium transition-all transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2"
           >
             <BarChart3 className="h-5 w-5" />
             <span>{language === 'hi' ? 'विवरण और ग्राफ देखें' : 'View Details & Graphs'}</span>
           </button>
-          
-          {/* Additional Action Buttons */}
-          <div className="grid grid-cols-2 gap-2">
-            <button
-              onClick={() => setShowMap(true)}
-              className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-3 rounded-lg font-medium transition-all text-sm flex items-center justify-center space-x-1"
-            >
-              <MapPin className="h-4 w-4" />
-              <span>{language === 'hi' ? 'मैप देखें' : 'View Map'}</span>
-            </button>
-            <button
-              onClick={() => setShowDatePicker(true)}
-              className="bg-purple-500 hover:bg-purple-600 text-white py-2 px-3 rounded-lg font-medium transition-all text-sm flex items-center justify-center space-x-1"
-            >
-              <Calendar className="h-4 w-4" />
-              <span>{language === 'hi' ? 'समय अपडेट' : 'Update Time'}</span>
-            </button>
-          </div>
         </div>
       </div>
 

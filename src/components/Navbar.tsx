@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Leaf, User, Bell, Globe, X } from 'lucide-react';
+import { Leaf, User, Bell, Globe, X, Settings, LogOut, Moon, Sun } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import NotificationPanel from './NotificationPanel';
 
@@ -7,8 +7,22 @@ const Navbar = () => {
   const { language, setLanguage, t, getLanguageName } = useLanguage();
   const [showNotifications, setShowNotifications] = useState(false);
   const [showLanguageMenu, setShowLanguageMenu] = useState(false);
+  const [showAccountMenu, setShowAccountMenu] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
+  const [showPreferences, setShowPreferences] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
 
   const supportedLanguages = ['hi', 'en', 'bn', 'ta', 'te', 'mr', 'gu', 'kn', 'ml', 'pa', 'or', 'as'];
+
+  const handleSignOut = () => {
+    // Add sign out logic here
+    alert(language === 'hi' ? 'साइन आउट हो गए' : 'Signed out successfully');
+  };
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+    document.documentElement.classList.toggle('dark');
+  };
 
   return (
     <>
@@ -69,15 +83,152 @@ const Navbar = () => {
                 </button>
               </div>
 
-              {/* User Profile */}
-              <button className="flex items-center space-x-2 bg-gradient-to-r from-green-100 to-emerald-100 px-4 py-2 rounded-lg hover:from-green-200 hover:to-emerald-200 transition-all transform hover:scale-105 shadow-md">
-                <User className="h-5 w-5 text-green-600" />
-                <span className="text-sm font-medium text-green-800">Innovative Mind</span>
-              </button>
+              {/* User Account */}
+              <div className="relative">
+                <button 
+                  onClick={() => setShowAccountMenu(!showAccountMenu)}
+                  className="flex items-center space-x-2 bg-gradient-to-r from-green-100 to-emerald-100 px-4 py-2 rounded-lg hover:from-green-200 hover:to-emerald-200 transition-all transform hover:scale-105 shadow-md"
+                >
+                  <User className="h-5 w-5 text-green-600" />
+                  <span className="text-sm font-medium text-green-800">Innovative Mind</span>
+                </button>
+
+                {/* Account Dropdown */}
+                {showAccountMenu && (
+                  <div className="absolute right-0 top-12 bg-white border-2 border-gray-200 rounded-lg shadow-xl z-50 min-w-[200px]">
+                    <div className="p-4 border-b border-gray-100">
+                      <p className="font-medium text-gray-800">Innovative Mind</p>
+                      <p className="text-sm text-gray-600">support@innovativemind.in</p>
+                    </div>
+                    
+                    <button
+                      onClick={() => {
+                        setShowProfile(true);
+                        setShowAccountMenu(false);
+                      }}
+                      className="w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors flex items-center space-x-2"
+                    >
+                      <User className="h-4 w-4 text-gray-600" />
+                      <span>{language === 'hi' ? 'प्रोफाइल' : 'Profile'}</span>
+                    </button>
+                    
+                    <button
+                      onClick={() => {
+                        setShowPreferences(true);
+                        setShowAccountMenu(false);
+                      }}
+                      className="w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors flex items-center space-x-2"
+                    >
+                      <Settings className="h-4 w-4 text-gray-600" />
+                      <span>{language === 'hi' ? 'सेटिंग्स' : 'Preferences'}</span>
+                    </button>
+                    
+                    <button
+                      onClick={toggleDarkMode}
+                      className="w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors flex items-center space-x-2"
+                    >
+                      {darkMode ? <Sun className="h-4 w-4 text-gray-600" /> : <Moon className="h-4 w-4 text-gray-600" />}
+                      <span>{language === 'hi' ? 'डार्क मोड' : 'Dark Mode'}</span>
+                    </button>
+                    
+                    <div className="border-t border-gray-100">
+                      <button
+                        onClick={handleSignOut}
+                        className="w-full px-4 py-3 text-left hover:bg-red-50 transition-colors flex items-center space-x-2 text-red-600"
+                      >
+                        <LogOut className="h-4 w-4" />
+                        <span>{language === 'hi' ? 'साइन आउट' : 'Sign Out'}</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
       </nav>
+
+      {/* Profile Modal */}
+      {showProfile && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full">
+            <div className="bg-gradient-to-r from-green-500 to-emerald-600 p-6 text-white rounded-t-2xl">
+              <div className="flex justify-between items-center">
+                <h3 className="text-xl font-bold">{language === 'hi' ? 'प्रोफाइल' : 'Profile'}</h3>
+                <button onClick={() => setShowProfile(false)} className="bg-white bg-opacity-20 p-1 rounded">
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+            </div>
+            <div className="p-6">
+              <div className="text-center mb-6">
+                <div className="w-20 h-20 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
+                  IM
+                </div>
+                <h4 className="text-xl font-bold text-gray-800">Innovative Mind</h4>
+                <p className="text-gray-600">Carbon Credit Platform</p>
+              </div>
+              <div className="space-y-4">
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <p className="text-sm text-gray-600">{language === 'hi' ? 'ईमेल' : 'Email'}</p>
+                  <p className="font-medium">support@innovativemind.in</p>
+                </div>
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <p className="text-sm text-gray-600">{language === 'hi' ? 'स्थान' : 'Location'}</p>
+                  <p className="font-medium">Kolkata, West Bengal</p>
+                </div>
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <p className="text-sm text-gray-600">{language === 'hi' ? 'भाषा' : 'Language'}</p>
+                  <p className="font-medium">{getLanguageName(language)}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Preferences Modal */}
+      {showPreferences && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full">
+            <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-6 text-white rounded-t-2xl">
+              <div className="flex justify-between items-center">
+                <h3 className="text-xl font-bold">{language === 'hi' ? 'सेटिंग्स' : 'Preferences'}</h3>
+                <button onClick={() => setShowPreferences(false)} className="bg-white bg-opacity-20 p-1 rounded">
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+            </div>
+            <div className="p-6 space-y-4">
+              <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                <div>
+                  <p className="font-medium">{language === 'hi' ? 'डार्क मोड' : 'Dark Mode'}</p>
+                  <p className="text-sm text-gray-600">{language === 'hi' ? 'रात के लिए बेहतर' : 'Better for night use'}</p>
+                </div>
+                <button
+                  onClick={toggleDarkMode}
+                  className={`w-12 h-6 rounded-full transition-colors ${darkMode ? 'bg-green-500' : 'bg-gray-300'}`}
+                >
+                  <div className={`w-5 h-5 bg-white rounded-full transition-transform ${darkMode ? 'translate-x-6' : 'translate-x-1'}`} />
+                </button>
+              </div>
+              
+              <div className="p-4 bg-gray-50 rounded-lg">
+                <p className="font-medium mb-2">{language === 'hi' ? 'भाषा चुनें' : 'Select Language'}</p>
+                <select
+                  value={language}
+                  onChange={(e) => setLanguage(e.target.value as any)}
+                  className="w-full p-2 border border-gray-300 rounded-lg"
+                >
+                  {supportedLanguages.map(lang => (
+                    <option key={lang} value={lang}>{getLanguageName(lang)}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Notification Panel */}
       {showNotifications && (
@@ -85,12 +236,13 @@ const Navbar = () => {
       )}
 
       {/* Click outside to close menus */}
-      {(showNotifications || showLanguageMenu) && (
+      {(showNotifications || showLanguageMenu || showAccountMenu) && (
         <div
           className="fixed inset-0 z-40"
           onClick={() => {
             setShowNotifications(false);
             setShowLanguageMenu(false);
+            setShowAccountMenu(false);
           }}
         />
       )}

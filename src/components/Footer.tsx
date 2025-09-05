@@ -127,7 +127,7 @@ const Footer = () => {
   const tutorials = [
     {
       title: language === 'hi' ? '🎥 प्रोजेक्ट रजिस्ट्रेशन गाइड' : '🎥 Project Registration Guide',
-      description: language === 'hi' ? '5 मिनट में सीखें कि कैसे अपना प्रोजेक्ट रजिस्टर करें' : 'Learn how to register your project in 5 minutes',
+      description: language === 'hi' ? 'अपना प्रोजेक्ट रजिस्टर करने की पूरी प्रक्रिया' : 'Complete process to register your project',
       steps: [
         language === 'hi' ? 'हरा "नया प्रोजेक्ट जोड़ें" बटन दबाएं' : 'Click green "Add New Project" button',
         language === 'hi' ? 'अपने खेत का नाम और फसल का प्रकार चुनें' : 'Enter farm name and select crop type',
@@ -138,9 +138,9 @@ const Footer = () => {
     },
     {
       title: language === 'hi' ? '📱 मोबाइल ऐप का उपयोग' : '📱 Mobile App Usage',
-      description: language === 'hi' ? 'मोबाइल ऐप की सभी सुविधाओं का उपयोग करना सीखें' : 'Learn to use all mobile app features',
+      description: language === 'hi' ? 'वेबसाइट की सभी सुविधाओं का उपयोग करना सीखें' : 'Learn to use all website features',
       steps: [
-        language === 'hi' ? 'ऐप डाउनलोड करें और अकाउंट बनाएं' : 'Download app and create account',
+        language === 'hi' ? 'वेबसाइट खोलें और अकाउंट बनाएं' : 'Open website and create account',
         language === 'hi' ? 'अपनी भाषा चुनें और प्रोफाइल सेट करें' : 'Choose language and set up profile',
         language === 'hi' ? 'कैमरा और लोकेशन की अनुमति दें' : 'Allow camera and location permissions',
         language === 'hi' ? 'वॉइस असिस्टेंट का उपयोग करना सीखें' : 'Learn to use voice assistant',
@@ -335,6 +335,35 @@ const Footer = () => {
               </div>
 
               {/* App Download */}
+              <div className="bg-gradient-to-r from-purple-50 to-indigo-50 p-4 rounded-lg border border-purple-200">
+                <h5 className="font-medium text-purple-800 mb-3">
+                  {language === 'hi' ? '📱 वेब एप्लिकेशन' : '📱 Web Application'}
+                </h5>
+                <p className="text-purple-700 text-sm mb-3">
+                  {language === 'hi' 
+                    ? 'यह एक वेब-आधारित एप्लिकेशन है जो सभी डिवाइसेस पर काम करती है'
+                    : 'This is a web-based application that works on all devices'
+                  }
+                </p>
+                <div className="flex space-x-2">
+                  <a
+                    href="https://play.google.com/store"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded text-xs transition-colors"
+                  >
+                    Google Play
+                  </a>
+                  <a
+                    href="https://apps.apple.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded text-xs transition-colors"
+                  >
+                    App Store
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -21,8 +21,22 @@ const Dashboard: React.FC<DashboardProps> = ({ projects, onAddProject, onUpdateP
   const activeProjects = projects.filter(p => p.status === 'active').length;
 
   const handleStatsClick = (type: string) => {
-    setShowStats(true);
-    // You can add specific stats modal logic here
+    if (type === 'credits') {
+      alert(language === 'hi' 
+        ? `कुल कार्बन क्रेडिट्स: ${totalCredits.toFixed(1)} टन\nअनुमानित आय: ₹${(totalCredits * 1500).toLocaleString('hi-IN')}`
+        : `Total Carbon Credits: ${totalCredits.toFixed(1)} tons\nEstimated Income: ₹${(totalCredits * 1500).toLocaleString('hi-IN')}`
+      );
+    } else if (type === 'area') {
+      alert(language === 'hi'
+        ? `कुल पंजीकृत भूमि: ${totalArea} एकड़\nऔसत प्रति एकड़: ${(totalCredits / totalArea).toFixed(1)} टन CO₂`
+        : `Total Registered Land: ${totalArea} acres\nAverage per acre: ${(totalCredits / totalArea).toFixed(1)} tons CO₂`
+      );
+    } else if (type === 'projects') {
+      alert(language === 'hi'
+        ? `सक्रिय प्रोजेक्ट्स: ${activeProjects}\nकुल प्रोजेक्ट्स: ${projects.length}\nपूर्ण दर: ${Math.round((activeProjects / projects.length) * 100)}%`
+        : `Active Projects: ${activeProjects}\nTotal Projects: ${projects.length}\nCompletion Rate: ${Math.round((activeProjects / projects.length) * 100)}%`
+      );
+    }
   };
 
   return (

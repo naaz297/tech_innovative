@@ -2,21 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Remove center lines and outlines from inputs */
+/* Enhanced input styling without center lines */
 input:focus,
 textarea:focus,
 select:focus {
-  outline: none !important;
-  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2) !important;
-  border: 2px solid #22C55E !important;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+  border-color: #22C55E;
 }
 
-/* Remove any default browser styling */
 input,
 textarea,
 select {
-  border: none;
-  outline: none;
+  border: 2px solid #e5e7eb;
+  transition: all 0.2s ease;
 }
 
 input::-webkit-outer-spin-button,
@@ -46,4 +45,46 @@ input[type=number] {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #16A34A;
+}
+
+/* Dark mode support */
+.dark {
+  background: #1f2937;
+  color: #f9fafb;
+}
+
+.dark .bg-white {
+  background: #374151;
+}
+
+.dark .text-gray-800 {
+  color: #f9fafb;
+}
+
+.dark .text-gray-600 {
+  color: #d1d5db;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+  .grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-3 {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+/* Enhanced animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.5s ease-out;
 }
