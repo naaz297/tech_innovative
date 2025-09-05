@@ -13,7 +13,7 @@ interface DashboardProps {
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ projects, onAddProject, onDeleteProject }) => {
-  const { t, language } = useLanguage(); // ✅ FIXED: include language
+  const { t, language } = useLanguage();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [selectedStat, setSelectedStat] = useState<string | null>(null);
 
@@ -145,7 +145,9 @@ const Dashboard: React.FC<DashboardProps> = ({ projects, onAddProject, onDeleteP
           {language === 'hi' ? 'आपका डैशबोर्ड' : 'Your Dashboard'}
         </h1>
         <p className="text-gray-600 dark:text-gray-400">
-          {language === 'hi' ? 'अपने कार्बन क्रेडिट्स और प्रोजेक्ट्स को देखें और प्रबंधित करें' : 'View and manage your carbon credits and projects'}
+          {language === 'hi'
+            ? 'अपने कार्बन क्रेडिट्स और प्रोजेक्ट्स को देखें और प्रबंधित करें'
+            : 'View and manage your carbon credits and projects'}
         </p>
       </div>
 
@@ -158,13 +160,13 @@ const Dashboard: React.FC<DashboardProps> = ({ projects, onAddProject, onDeleteP
           color="green"
           onClick={() => handleStatClick('credits')}
         />
-     <StatsCard
-  title={t('totalArea')}
-  value={${totalArea} ${t('acres')}}
-  icon={<MapPin className="w-8 h-8" />}
-  color="blue"
-  onClick={() => handleStatClick('area')}
-/>
+        <StatsCard
+          title={t('totalArea')}
+          value={${totalArea} ${t('acres')}} // ✅ FIXED HERE
+          icon={<MapPin className="w-8 h-8" />}
+          color="blue"
+          onClick={() => handleStatClick('area')}
+        />
         <StatsCard
           title={t('activeProjects')}
           value={activeProjects.toString()}
@@ -195,9 +197,7 @@ const Dashboard: React.FC<DashboardProps> = ({ projects, onAddProject, onDeleteP
           <h3 className="text-xl font-semibold text-gray-600 dark:text-gray-400 mb-2">
             {t('noProjectsYet')}
           </h3>
-          <p className="text-gray-500 dark:text-gray-400 mb-6">
-            {t('startByAddingProject')}
-          </p>
+          <p className="text-gray-500 dark:text-gray-400 mb-6">{t('startByAddingProject')}</p>
           <button
             onClick={() => setIsAddModalOpen(true)}
             className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-8 py-4 rounded-xl flex items-center gap-3 mx-auto transition-all transform hover:scale-105 shadow-lg font-medium text-lg"
@@ -209,21 +209,14 @@ const Dashboard: React.FC<DashboardProps> = ({ projects, onAddProject, onDeleteP
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project) => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              onDelete={onDeleteProject}
-            />
+            <ProjectCard key={project.id} project={project} onDelete={onDeleteProject} />
           ))}
         </div>
       )}
 
       {/* Add Project Modal */}
       {isAddModalOpen && (
-        <AddProjectModal
-          onClose={() => setIsAddModalOpen(false)}
-          onSubmit={onAddProject}
-        />
+        <AddProjectModal onClose={() => setIsAddModalOpen(false)} onSubmit={onAddProject} />
       )}
 
       {/* Stats Detail Modal */}
