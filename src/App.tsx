@@ -65,7 +65,6 @@ function App() {
       id: Date.now().toString(),
     };
     setProjects([...projects, newProject]);
-    setShowAddProject(false);
   };
 
   const handleUpdateProject = (updatedProject: Project) => {
