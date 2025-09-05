@@ -161,12 +161,12 @@ const Dashboard: React.FC<DashboardProps> = ({ projects, onAddProject, onDeleteP
           onClick={() => handleStatClick('credits')}
         />
         <StatsCard
-          title={t('totalArea')}
-          value={${totalArea} ${t('acres')}} // ✅ FIXED HERE
-          icon={<MapPin className="w-8 h-8" />}
-          color="blue"
-          onClick={() => handleStatClick('area')}
-        />
+  title={t('totalArea')}
+  value={`${totalArea} ${t('acres')}`}
+  icon={<MapPin className="w-8 h-8" />}
+  color="blue"
+  onClick={() => handleStatClick('area')}
+/>
         <StatsCard
           title={t('activeProjects')}
           value={activeProjects.toString()}
