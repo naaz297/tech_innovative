@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { LanguageContext } from '../contexts/LanguageContext';
+import { useLanguage } from '../contexts/LanguageContext';
 import { Project } from '../types/Project';
 import ProjectCard from './ProjectCard';
 import StatsCard from './StatsCard';
@@ -13,7 +13,7 @@ interface DashboardProps {
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ projects, onAddProject, onDeleteProject }) => {
-  const { t } = useContext(LanguageContext);
+  const { t } = useLanguage();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [selectedStat, setSelectedStat] = useState<string | null>(null);
 
