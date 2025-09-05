@@ -279,20 +279,20 @@ const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, onClos
           {activeTab === 'photos' && (
             <div className="space-y-4">
               <div className="flex justify-between items-center">
-                <h4 className="font-bold text-gray-800">
+                <h4 className="font-bold text-gray-800 dark:text-white">
                   {language === 'hi' ? 'खेत की तस्वीरें' : 'Farm Photos'}
                 </h4>
                 <div className="flex space-x-2">
                   <button 
                     onClick={() => setShowCamera(true)}
-                    className="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center space-x-1"
+                    className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center space-x-2 shadow-lg hover:shadow-xl transform hover:scale-105"
                   >
                     <Camera className="h-4 w-4" />
                     <span>{language === 'hi' ? 'कैमरा' : 'Camera'}</span>
                   </button>
                   <button 
                     onClick={openGallery}
-                    className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center space-x-1"
+                    className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center space-x-2 shadow-lg hover:shadow-xl transform hover:scale-105"
                   >
                     <Image className="h-4 w-4" />
                     <span>{language === 'hi' ? 'गैलरी' : 'Gallery'}</span>
@@ -310,29 +310,48 @@ const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, onClos
                       <img
                         src={photo}
                         alt={`Farm photo ${index + 1}`}
-                        className="w-full h-32 object-cover rounded-lg border-2 border-gray-200 hover:border-green-300 transition-colors cursor-pointer"
+                        className="w-full h-32 object-cover rounded-lg border-2 border-gray-200 dark:border-gray-600 hover:border-green-300 transition-colors cursor-pointer shadow-md hover:shadow-lg transform hover:scale-105"
+                        onClick={() => {
+                          // Open photo in full screen
+                          const modal = document.createElement('div');
+                          modal.className = 'fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 p-4';
+                          modal.innerHTML = `
+                            <div class="relative max-w-4xl max-h-full">
+                              <img src="${photo}" alt="Farm photo ${index + 1}" class="max-w-full max-h-full object-contain rounded-lg">
+                              <button class="absolute top-4 right-4 bg-white bg-opacity-20 text-white p-2 rounded-full hover:bg-opacity-30 transition-colors" onclick="this.parentElement.parentElement.remove()">
+                                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                              </button>
+                            </div>
+                          `;
+                          document.body.appendChild(modal);
+                        }}
                       />
                       <button
                         onClick={() => handlePhotoDelete(index)}
-                        className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600"
+                        className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600 shadow-lg"
                       >
                         <X className="h-3 w-3" />
                       </button>
+                      <div className="absolute bottom-2 left-2 bg-black bg-opacity-60 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                        {language === 'hi' ? `फोटो ${index + 1}` : `Photo ${index + 1}`}
+                      </div>
                     </div>
                   ))}
                 </div>
               ) : (
-                <div className="text-center py-12 bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg border-2 border-dashed border-green-300">
+                <div className="text-center py-12 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900 dark:to-emerald-900 rounded-lg border-2 border-dashed border-green-300 dark:border-green-600">
                   <Camera className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-600">
+                  <p className="text-gray-600 dark:text-gray-400">
                     {language === 'hi' ? 'कोई तस्वीरें नहीं मिलीं' : 'No photos found'}
                   </p>
-                  <p className="text-gray-500 text-sm">
+                  <p className="text-gray-500 dark:text-gray-500 text-sm">
                     {language === 'hi' ? 'अपने खेत की तस्वीरें जोड़ें' : 'Add photos of your farm'}
                   </p>
                   <button 
                     onClick={() => setShowCamera(true)}
-                    className="mt-4 bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2 mx-auto"
+                    className="mt-4 bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center space-x-2 mx-auto shadow-lg hover:shadow-xl transform hover:scale-105"
                   >
                     <Plus className="h-4 w-4" />
                     <span>{language === 'hi' ? 'पहली तस्वीर जोड़ें' : 'Add First Photo'}</span>
@@ -349,6 +368,32 @@ const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, onClos
                 className="hidden"
                 multiple
               />
+              
+              {/* Photo Upload Progress */}
+              {projectPhotos.length > 0 && (
+                <div className="bg-blue-50 dark:bg-blue-900 border border-blue-200 dark:border-blue-700 rounded-lg p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-blue-800 dark:text-blue-200 font-medium">
+                      {language === 'hi' ? 'अपलोड की गई तस्वीरें' : 'Uploaded Photos'}
+                    </span>
+                    <span className="text-blue-600 dark:text-blue-400 text-sm">
+                      {projectPhotos.length} {language === 'hi' ? 'तस्वीरें' : 'photos'}
+                    </span>
+                  </div>
+                  <div className="w-full bg-blue-200 dark:bg-blue-800 rounded-full h-2">
+                    <div 
+                      className="bg-blue-600 h-2 rounded-full transition-all duration-300" 
+                      style={{ width: `${Math.min((projectPhotos.length / 5) * 100, 100)}%` }}
+                    ></div>
+                  </div>
+                  <p className="text-xs text-blue-600 dark:text-blue-400 mt-1">
+                    {language === 'hi' 
+                      ? `${5 - projectPhotos.length} और तस्वीरें जोड़ सकते हैं` 
+                      : `Can add ${5 - projectPhotos.length} more photos`
+                    }
+                  </p>
+                </div>
+              )}
             </div>
           )}
         </div>
