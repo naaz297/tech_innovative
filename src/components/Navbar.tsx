@@ -15,27 +15,49 @@ const Navbar = () => {
   const supportedLanguages = ['hi', 'en', 'bn', 'ta', 'te', 'mr', 'gu', 'kn', 'ml', 'pa', 'or', 'as'];
 
   const handleSignOut = () => {
-    // Add sign out logic here
-    alert(language === 'hi' ? 'साइन आउट हो गए' : 'Signed out successfully');
+    if (confirm(language === 'hi' ? 'क्या आप वाकई साइन आउट करना चाहते हैं?' : 'Are you sure you want to sign out?')) {
+      // Clear any stored data
+      localStorage.clear();
+      sessionStorage.clear();
+      
+      // Show success message
+      alert(language === 'hi' ? 'सफलतापूर्वक साइन आउट हो गए!' : 'Successfully signed out!');
+      
+      // In a real app, redirect to login page
+      window.location.reload();
+    }
   };
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
     document.documentElement.classList.toggle('dark');
+    localStorage.setItem('darkMode', (!darkMode).toString());
   };
 
   return (
     <>
-      <nav className="bg-white shadow-lg border-b-4 border-green-500 relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav className="bg-white shadow-lg border-b-4 border-green-500 relative overflow-hidden">
+        {/* Animated Background */}
+        <div className="absolute inset-0 bg-gradient-to-r from-green-50 via-emerald-50 to-teal-50 opacity-50">
+          <div className="absolute top-0 left-0 w-full h-full">
+            <div className="animate-pulse absolute top-2 left-10 w-2 h-2 bg-green-400 rounded-full"></div>
+            <div className="animate-bounce absolute top-4 right-20 w-1 h-1 bg-emerald-400 rounded-full"></div>
+            <div className="animate-ping absolute bottom-3 left-1/4 w-1 h-1 bg-teal-400 rounded-full"></div>
+            <div className="animate-pulse absolute bottom-2 right-10 w-2 h-2 bg-green-300 rounded-full"></div>
+          </div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-3">
-              <div className="bg-gradient-to-r from-green-500 to-emerald-600 p-2 rounded-lg shadow-lg">
-                <Leaf className="h-8 w-8 text-white" />
+              <div className="bg-gradient-to-r from-green-500 to-emerald-600 p-2 rounded-lg shadow-lg animate-pulse">
+                <Leaf className="h-8 w-8 text-white animate-bounce" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-gray-800">{t('nav.title')}</h1>
-                <p className="text-xs text-gray-600">{t('nav.subtitle')}</p>
+                <h1 className="text-xl font-bold text-gray-800 bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent animate-pulse">
+                  {t('nav.title')}
+                </h1>
+                <p className="text-xs text-gray-600 animate-fade-in">{t('nav.subtitle')}</p>
               </div>
             </div>
             
@@ -44,14 +66,14 @@ const Navbar = () => {
               <div className="relative">
                 <button
                   onClick={() => setShowLanguageMenu(!showLanguageMenu)}
-                  className="p-2 text-gray-600 hover:text-green-600 transition-colors rounded-lg hover:bg-green-50 flex items-center space-x-1"
+                  className="p-2 text-gray-600 hover:text-green-600 transition-all duration-300 rounded-lg hover:bg-green-50 flex items-center space-x-1 transform hover:scale-105"
                 >
-                  <Globe className="h-5 w-5" />
+                  <Globe className="h-5 w-5 animate-spin-slow" />
                   <span className="text-sm font-medium">{getLanguageName(language)}</span>
                 </button>
                 
                 {showLanguageMenu && (
-                  <div className="absolute right-0 top-12 bg-white border-2 border-gray-200 rounded-lg shadow-xl z-50 min-w-[160px] max-h-64 overflow-y-auto">
+                  <div className="absolute right-0 top-12 bg-white border-2 border-gray-200 rounded-lg shadow-xl z-50 min-w-[160px] max-h-64 overflow-y-auto animate-fade-in">
                     {supportedLanguages.map((lang) => (
                       <button
                         key={lang}
@@ -74,11 +96,11 @@ const Navbar = () => {
               <div className="relative">
                 <button
                   onClick={() => setShowNotifications(!showNotifications)}
-                  className="p-2 text-gray-600 hover:text-green-600 transition-colors rounded-lg hover:bg-green-50 relative"
+                  className="p-2 text-gray-600 hover:text-green-600 transition-all duration-300 rounded-lg hover:bg-green-50 relative transform hover:scale-105"
                 >
-                  <Bell className="h-6 w-6" />
+                  <Bell className="h-6 w-6 animate-swing" />
                   <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center animate-pulse">
-                    3
+                    4
                   </span>
                 </button>
               </div>
@@ -87,7 +109,7 @@ const Navbar = () => {
               <div className="relative">
                 <button 
                   onClick={() => setShowAccountMenu(!showAccountMenu)}
-                  className="flex items-center space-x-2 bg-gradient-to-r from-green-100 to-emerald-100 px-4 py-2 rounded-lg hover:from-green-200 hover:to-emerald-200 transition-all transform hover:scale-105 shadow-md"
+                  className="flex items-center space-x-2 bg-gradient-to-r from-green-100 to-emerald-100 px-4 py-2 rounded-lg hover:from-green-200 hover:to-emerald-200 transition-all duration-300 transform hover:scale-105 shadow-md animate-gradient"
                 >
                   <User className="h-5 w-5 text-green-600" />
                   <span className="text-sm font-medium text-green-800">Innovative Mind</span>
@@ -95,8 +117,8 @@ const Navbar = () => {
 
                 {/* Account Dropdown */}
                 {showAccountMenu && (
-                  <div className="absolute right-0 top-12 bg-white border-2 border-gray-200 rounded-lg shadow-xl z-50 min-w-[200px]">
-                    <div className="p-4 border-b border-gray-100">
+                  <div className="absolute right-0 top-12 bg-white border-2 border-gray-200 rounded-lg shadow-xl z-50 min-w-[200px] animate-fade-in">
+                    <div className="p-4 border-b border-gray-100 bg-gradient-to-r from-green-50 to-emerald-50">
                       <p className="font-medium text-gray-800">Innovative Mind</p>
                       <p className="text-sm text-gray-600">support@innovativemind.in</p>
                     </div>
@@ -151,7 +173,7 @@ const Navbar = () => {
       {/* Profile Modal */}
       {showProfile && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full animate-fade-in">
             <div className="bg-gradient-to-r from-green-500 to-emerald-600 p-6 text-white rounded-t-2xl">
               <div className="flex justify-between items-center">
                 <h3 className="text-xl font-bold">{language === 'hi' ? 'प्रोफाइल' : 'Profile'}</h3>
@@ -190,7 +212,7 @@ const Navbar = () => {
       {/* Preferences Modal */}
       {showPreferences && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full animate-fade-in">
             <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-6 text-white rounded-t-2xl">
               <div className="flex justify-between items-center">
                 <h3 className="text-xl font-bold">{language === 'hi' ? 'सेटिंग्स' : 'Preferences'}</h3>
