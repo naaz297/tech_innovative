@@ -48,6 +48,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onUpdate, onDelete }
   const handleDelete = () => {
     if (onDelete) {
       onDelete(project.id);
+      alert(language === 'hi' ? 'प्रोजेक्ट सफलतापूर्वक हटा दिया गया!' : 'Project deleted successfully!');
     }
     setShowDeleteConfirm(false);
   };

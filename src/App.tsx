@@ -76,7 +76,9 @@ function App() {
   };
 
   const handleDeleteProject = (projectId: string) => {
-    setProjects(prev => prev.filter(p => p.id !== projectId));
+    if (window.confirm(language === 'hi' ? 'क्या आप वाकई इस प्रोजेक्ट को हटाना चाहते हैं?' : 'Are you sure you want to delete this project?')) {
+      setProjects(prev => prev.filter(p => p.id !== projectId));
+    }
   };
   return (
     <LanguageProvider>

@@ -136,6 +136,16 @@ const Dashboard: React.FC<DashboardProps> = ({ projects, onAddProject, onDeleteP
 
   return (
     <div className="space-y-6">
+      {/* Dashboard Heading */}
+      <div className="text-center mb-8">
+        <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-2">
+          {language === 'hi' ? 'आपका डैशबोर्ड' : 'Your Dashboard'}
+        </h1>
+        <p className="text-gray-600 dark:text-gray-400">
+          {language === 'hi' ? 'अपने कार्बन क्रेडिट्स और प्रोजेक्ट्स को देखें और प्रबंधित करें' : 'View and manage your carbon credits and projects'}
+        </p>
+      </div>
+
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <StatsCard

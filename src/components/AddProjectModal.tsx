@@ -178,7 +178,13 @@ const AddProjectModal: React.FC<AddProjectModalProps> = ({ onClose, onSubmit }) 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <button
                      type="button"
-                      onClick={() => handleInputChange('type', 'rice')}
+                      onClick={() => {
+                        handleInputChange('type', 'rice');
+                        if (!formData.name) {
+                          const riceName = language === 'hi' ? 'धान का खेत' : 'Rice Farm';
+                          handleInputChange('name', riceName);
+                        }
+                      }}
                       className={`p-6 rounded-xl border-2 transition-all transform hover:scale-105 ${
                         formData.type === 'rice'
                           ? 'border-green-500 bg-green-50 dark:bg-green-900 shadow-lg'
@@ -194,7 +200,13 @@ const AddProjectModal: React.FC<AddProjectModalProps> = ({ onClose, onSubmit }) 
                     
                     <button
                      type="button"
-                      onClick={() => handleInputChange('type', 'agroforestry')}
+                      onClick={() => {
+                        handleInputChange('type', 'agroforestry');
+                        if (!formData.name) {
+                          const agroName = language === 'hi' ? 'कृषि वानिकी प्रोजेक्ट' : 'Agroforestry Project';
+                          handleInputChange('name', agroName);
+                        }
+                      }}
                       className={`p-6 rounded-xl border-2 transition-all transform hover:scale-105 ${
                         formData.type === 'agroforestry'
                           ? 'border-green-500 bg-green-50 dark:bg-green-900 shadow-lg'
