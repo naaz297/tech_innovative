@@ -14,7 +14,6 @@ interface DashboardProps {
 
 const Dashboard: React.FC<DashboardProps> = ({ projects, onAddProject, onUpdateProject, onDeleteProject }) => {
   const { language, t } = useLanguage();
-  const [showStats, setShowStats] = useState(false);
   
   const totalCredits = projects.reduce((sum, project) => sum + project.carbonCredits, 0);
   const totalArea = projects.reduce((sum, project) => sum + project.area, 0);
@@ -22,19 +21,23 @@ const Dashboard: React.FC<DashboardProps> = ({ projects, onAddProject, onUpdateP
 
   const handleStatsClick = (type: string) => {
     if (type === 'credits') {
-      alert(language === 'hi' 
-        ? `कुल कार्बन क्रेडिट्स: ${totalCredits.toFixed(1)} टन\nअनुमानित आय: ₹${(totalCredits * 1500).toLocaleString('hi-IN')}`
-        : `Total Carbon Credits: ${totalCredits.toFixed(1)} tons\nEstimated Income: ₹${(totalCredits * 1500).toLocaleString('hi-IN')}`
+      const message = language === 'hi' 
+        ? `🌱 कुल कार्बन क्रेडिट्स: ${totalCredits.toFixed(1)} टन\n💰 अनुमानित आय: ₹${(totalCredits * 1500).toLocaleString('hi-IN')}\n📊 औसत प्रति प्रोजेक्ट: ${(totalCredits / projects.length).toFixed(1)} टन\n⏰ अगला पेमेंट: 15 दिन में`
+        : `🌱 Total Carbon Credits: ${totalCredits.toFixed(1)} tons\n💰 Estimated Income: ₹${(totalCredits * 1500).toLocaleString('hi-IN')}\n📊 Average per project: ${(totalCredits / projects.length).toFixed(1)} tons\n⏰ Next payment: In 15 days`;
+      alert(message);
       );
     } else if (type === 'area') {
-      alert(language === 'hi'
-        ? `कुल पंजीकृत भूमि: ${totalArea} एकड़\nऔसत प्रति एकड़: ${(totalCredits / totalArea).toFixed(1)} टन CO₂`
-        : `Total Registered Land: ${totalArea} acres\nAverage per acre: ${(totalCredits / totalArea).toFixed(1)} tons CO₂`
+      const message = language === 'hi'
+        ? `🌾 कुल पंजीकृत भूमि: ${totalArea} एकड़\n📈 औसत प्रति एकड़: ${(totalCredits / totalArea).toFixed(1)} टन CO₂\n🏆 सबसे बड़ा खेत: ${Math.max(...projects.map(p => p.area))} एकड़\n📍 कुल स्थान: ${projects.length} गांव`
+        : `🌾 Total Registered Land: ${totalArea} acres\n📈 Average per acre: ${(totalCredits / totalArea).toFixed(1)} tons CO₂\n🏆 Largest farm: ${Math.max(...projects.map(p => p.area))} acres\n📍 Total locations: ${projects.length} villages`;
+      alert(message);
       );
     } else if (type === 'projects') {
-      alert(language === 'hi'
-        ? `सक्रिय प्रोजेक्ट्स: ${activeProjects}\nकुल प्रोजेक्ट्स: ${projects.length}\nपूर्ण दर: ${Math.round((activeProjects / projects.length) * 100)}%`
-        : `Active Projects: ${activeProjects}\nTotal Projects: ${projects.length}\nCompletion Rate: ${Math.round((activeProjects / projects.length) * 100)}%`
+      const completionRate = projects.length > 0 ? Math.round((activeProjects / projects.length) * 100) : 0;
+      const message = language === 'hi'
+        ? `✅ सक्रिय प्रोजेक्ट्स: ${activeProjects}\n📋 कुल प्रोजेक्ट्स: ${projects.length}\n📊 सफलता दर: ${completionRate}%\n🎯 इस महीने जोड़े गए: ${projects.filter(p => new Date(p.lastUpdated).getMonth() === new Date().getMonth()).length}`
+        : `✅ Active Projects: ${activeProjects}\n📋 Total Projects: ${projects.length}\n📊 Success Rate: ${completionRate}%\n🎯 Added this month: ${projects.filter(p => new Date(p.lastUpdated).getMonth() === new Date().getMonth()).length}`;
+      alert(message);
       );
     }
   };
