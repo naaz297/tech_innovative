@@ -1,18 +1,18 @@
 // src/contexts/LanguageContext.tsx
 import React, { createContext, useContext, useState } from "react";
 
-type Language = 
-  | "en" 
-  | "hi" 
-  | "bn" 
-  | "ta" 
-  | "te" 
-  | "mr" 
-  | "gu" 
-  | "kn" 
-  | "ml" 
-  | "pa" 
-  | "or" 
+type Language =
+  | "en"
+  | "hi"
+  | "bn"
+  | "ta"
+  | "te"
+  | "mr"
+  | "gu"
+  | "kn"
+  | "ml"
+  | "pa"
+  | "or"
   | "as";
 
 interface LanguageContextType {
@@ -26,7 +26,7 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState<Language>("en");
 
-  // ✅ Add all translation keys you use in Dashboard.tsx
+  // ✅ All translation keys
   const translations: Record<Language, Record<string, string>> = {
     en: {
       totalCarbonCredits: "Total Carbon Credits",
@@ -76,8 +76,8 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       startByAddingProject: "पहला प्रोजेक्ट जोड़कर शुरू करें",
       close: "बंद करें",
     },
-    // Other languages → fallback to English for now
-    bn: {}, ta: {}, te: {}, mr: {}, gu: {}, kn: {}, ml: {}, pa: {}, or: {}, as: {}
+    // Other languages → fallback to English
+    bn: {}, ta: {}, te: {}, mr: {}, gu: {}, kn: {}, ml: {}, pa: {}, or: {}, as: {},
   };
 
   const t = (key: string): string => {
@@ -98,3 +98,6 @@ export const useLanguage = (): LanguageContextType => {
   }
   return context;
 };
+
+// ✅ Add a default export so imports like import LanguageContext from ... also work
+export default LanguageContext;
