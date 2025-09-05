@@ -10,9 +10,10 @@ interface DashboardProps {
   projects: Project[];
   onAddProject: (project: Omit<Project, 'id'>) => void;
   onDeleteProject: (id: string) => void;
+  onUpdateProject?: (project: Project) => void;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ projects, onAddProject, onDeleteProject }) => {
+const Dashboard: React.FC<DashboardProps> = ({ projects, onAddProject, onDeleteProject, onUpdateProject }) => {
   const { t, language } = useLanguage();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [selectedStat, setSelectedStat] = useState<string | null>(null);
@@ -209,7 +210,7 @@ const Dashboard: React.FC<DashboardProps> = ({ projects, onAddProject, onDeleteP
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project) => (
-            <ProjectCard key={project.id} project={project} onDelete={onDeleteProject} />
+            <ProjectCard key={project.id} project={project} onUpdate={onUpdateProject} onDelete={onDeleteProject} />
           ))}
         </div>
       )}
