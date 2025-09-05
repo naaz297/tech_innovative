@@ -1,93 +1,100 @@
-import { useEffect } from 'react';
-import { useLanguage } from '../contexts/LanguageContext';
+// src/contexts/LanguageContext.tsx
+import React, { createContext, useContext, useState } from "react";
 
-const LanguageDetector = () => {
-  const { setLanguage } = useLanguage();
+type Language = 
+  | "en" 
+  | "hi" 
+  | "bn" 
+  | "ta" 
+  | "te" 
+  | "mr" 
+  | "gu" 
+  | "kn" 
+  | "ml" 
+  | "pa" 
+  | "or" 
+  | "as";
 
-  useEffect(() => {
-    // Detect browser language first
-    const browserLang = navigator.language || navigator.languages[0];
-    
-    // Map browser languages to our supported languages
-    const languageMap: { [key: string]: any } = {
-      'hi': 'hi', 'hi-IN': 'hi',
-      'en': 'en', 'en-US': 'en', 'en-GB': 'en', 'en-IN': 'hi', // English in India defaults to Hindi
-      'bn': 'bn', 'bn-BD': 'bn', 'bn-IN': 'bn',
-      'ta': 'ta', 'ta-IN': 'ta', 'ta-LK': 'ta',
-      'te': 'te', 'te-IN': 'te',
-      'mr': 'mr', 'mr-IN': 'mr',
-      'gu': 'gu', 'gu-IN': 'gu',
-      'kn': 'kn', 'kn-IN': 'kn',
-      'ml': 'ml', 'ml-IN': 'ml',
-      'pa': 'pa', 'pa-IN': 'pa',
-      'or': 'or', 'or-IN': 'or',
-      'as': 'as', 'as-IN': 'as'
-    };
+interface LanguageContextType {
+  language: Language;
+  setLanguage: (lang: Language) => void;
+  t: (key: string) => string;
+}
 
-    // Set language based on browser
-    const detectedLang = languageMap[browserLang] || 'hi';
-    setLanguage(detectedLang);
+const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-    // Enhanced location-based language detection
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          
-          // Indian state-wise language mapping based on coordinates
-          let stateLang = 'hi'; // Default to Hindi
-          
-          // West Bengal & Bangladesh region
-          if (latitude >= 21.5 && latitude <= 27.5 && longitude >= 87 && longitude <= 93) {
-            stateLang = 'bn';
-          }
-          // Tamil Nadu region
-          else if (latitude >= 8 && latitude <= 13.5 && longitude >= 76.5 && longitude <= 80.5) {
-            stateLang = 'ta';
-          }
-          // Andhra Pradesh & Telangana region
-          else if (latitude >= 12.5 && latitude <= 19.5 && longitude >= 77 && longitude <= 84.5) {
-            stateLang = 'te';
-          }
-          // Maharashtra region
-          else if (latitude >= 15.5 && latitude <= 22 && longitude >= 72.5 && longitude <= 80.5) {
-            stateLang = 'mr';
-          }
-          // Gujarat region
-          else if (latitude >= 20 && latitude <= 24.5 && longitude >= 68.5 && longitude <= 74.5) {
-            stateLang = 'gu';
-          }
-          // Karnataka region
-          else if (latitude >= 11.5 && latitude <= 18.5 && longitude >= 74 && longitude <= 78.5) {
-            stateLang = 'kn';
-          }
-          // Kerala region
-          else if (latitude >= 8 && latitude <= 12.5 && longitude >= 74.5 && longitude <= 77.5) {
-            stateLang = 'ml';
-          }
-          // Punjab region
-          else if (latitude >= 29.5 && latitude <= 32.5 && longitude >= 74 && longitude <= 76.5) {
-            stateLang = 'pa';
-          }
-          // Odisha region
-          else if (latitude >= 17.5 && latitude <= 22.5 && longitude >= 81.5 && longitude <= 87.5) {
-            stateLang = 'or';
-          }
-          // Assam region
-          else if (latitude >= 24 && latitude <= 28 && longitude >= 89.5 && longitude <= 96) {
-            stateLang = 'as';
-          }
-          
-          setLanguage(stateLang);
-        },
-        (error) => {
-          console.log('Location access denied, using browser language');
-        }
-      );
-    }
-  }, [setLanguage]);
+export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [language, setLanguage] = useState<Language>("en");
 
-  return null;
+  // ✅ Add all translation keys you use in Dashboard.tsx
+  const translations: Record<Language, Record<string, string>> = {
+    en: {
+      totalCarbonCredits: "Total Carbon Credits",
+      totalCredits: "Total Credits",
+      estimatedIncome: "Estimated Income",
+      avgPerProject: "Avg per Project",
+      nextPayment: "Next Payment",
+      days: "days",
+      totalArea: "Total Area",
+      totalLand: "Total Land",
+      acres: "acres",
+      avgPerAcre: "Avg per Acre",
+      largestFarm: "Largest Farm",
+      totalVillages: "Total Villages",
+      activeProjects: "Active Projects",
+      activeNow: "Active Now",
+      completed: "Completed",
+      successRate: "Success Rate",
+      thisMonth: "This Month",
+      yourProjects: "Your Projects",
+      addProject: "Add Project",
+      noProjectsYet: "No projects yet",
+      startByAddingProject: "Start by adding your first project",
+      close: "Close",
+    },
+    hi: {
+      totalCarbonCredits: "कुल कार्बन क्रेडिट",
+      totalCredits: "कुल क्रेडिट",
+      estimatedIncome: "अनुमानित आय",
+      avgPerProject: "प्रोजेक्ट प्रति औसत",
+      nextPayment: "अगला भुगतान",
+      days: "दिन",
+      totalArea: "कुल क्षेत्रफल",
+      totalLand: "कुल भूमि",
+      acres: "एकड़",
+      avgPerAcre: "प्रति प्रोजेक्ट औसत",
+      largestFarm: "सबसे बड़ा खेत",
+      totalVillages: "कुल गांव",
+      activeProjects: "सक्रिय प्रोजेक्ट",
+      activeNow: "अभी सक्रिय",
+      completed: "पूर्ण",
+      successRate: "सफलता दर",
+      thisMonth: "इस महीने",
+      yourProjects: "आपके प्रोजेक्ट",
+      addProject: "प्रोजेक्ट जोड़ें",
+      noProjectsYet: "अभी तक कोई प्रोजेक्ट नहीं",
+      startByAddingProject: "पहला प्रोजेक्ट जोड़कर शुरू करें",
+      close: "बंद करें",
+    },
+    // Other languages → fallback to English for now
+    bn: {}, ta: {}, te: {}, mr: {}, gu: {}, kn: {}, ml: {}, pa: {}, or: {}, as: {}
+  };
+
+  const t = (key: string): string => {
+    return translations[language]?.[key] || translations["en"][key] || key;
+  };
+
+  return (
+    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+      {children}
+    </LanguageContext.Provider>
+  );
 };
 
-export default LanguageDetector;
+export const useLanguage = (): LanguageContextType => {
+  const context = useContext(LanguageContext);
+  if (!context) {
+    throw new Error("useLanguage must be used within a LanguageProvider");
+  }
+  return context;
+};
