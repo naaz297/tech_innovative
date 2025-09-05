@@ -187,10 +187,10 @@ const Dashboard: React.FC<DashboardProps> = ({ projects, onAddProject, onDeleteP
           </p>
           <button
             onClick={() => setIsAddModalOpen(true)}
-            className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg flex items-center gap-2 mx-auto transition-colors"
+            className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-8 py-4 rounded-xl flex items-center gap-3 mx-auto transition-all transform hover:scale-105 shadow-lg font-medium text-lg"
           >
             <Plus className="w-5 h-5" />
-            {t('addFirstProject')}
+            {language === 'hi' ? 'पहला प्रोजेक्ट जोड़ें' : 'Add First Project'}
           </button>
         </div>
       ) : (
@@ -209,7 +209,7 @@ const Dashboard: React.FC<DashboardProps> = ({ projects, onAddProject, onDeleteP
       {isAddModalOpen && (
         <AddProjectModal
           onClose={() => setIsAddModalOpen(false)}
-          onAdd={onAddProject}
+          onSubmit={onAddProject}
         />
       )}
 

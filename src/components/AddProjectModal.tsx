@@ -99,7 +99,7 @@ const AddProjectModal: React.FC<AddProjectModalProps> = ({ onClose, onSubmit }) 
   return (
     <>
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto mx-auto">
           {/* Header */}
           <div className="bg-gradient-to-r from-green-500 to-emerald-600 p-6 text-white relative overflow-hidden">
             {/* Background Pattern */}
@@ -111,7 +111,7 @@ const AddProjectModal: React.FC<AddProjectModalProps> = ({ onClose, onSubmit }) 
             
             <div className="relative z-10">
               <div className="flex justify-between items-center">
-                <div>
+                <div className="text-center flex-1">
                   <h2 className="text-2xl font-bold">{t('modal.title')}</h2>
                   <p className="text-green-100">{t('modal.subtitle')}</p>
                 </div>
@@ -124,7 +124,7 @@ const AddProjectModal: React.FC<AddProjectModalProps> = ({ onClose, onSubmit }) 
               </div>
               
               {/* Progress Steps */}
-              <div className="flex items-center mt-6 space-x-2">
+              <div className="flex items-center justify-center mt-6 space-x-2">
                 {[1, 2, 3].map(step => (
                   <React.Fragment key={step}>
                     <div className="flex flex-col items-center">
