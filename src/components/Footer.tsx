@@ -312,7 +312,7 @@ const Footer = () => {
                   <Phone className="h-4 w-4 group-hover:scale-110 transition-transform" />
                   <div>
                     <p className="text-xs text-green-300">{language === 'hi' ? 'कृषि हेल्पलाइन' : 'Agriculture Helpline'}</p>
-                    <p className="text-sm font-medium">+91 6246-×××-×××</p>
+                   <p className="text-sm font-medium">+91 6246xxxxxx</p>
                   </div>
                 </a>
                 
@@ -333,7 +333,7 @@ const Footer = () => {
                   </span>
                 </div>
               </div>
-
+                     href="https://play.google.com/store/apps/details?id=com.innovativemind.agricarbon"
               {/* App Download */}
               <div className="bg-gradient-to-r from-purple-50 to-indigo-50 p-4 rounded-lg border border-purple-200">
                 <h5 className="font-medium text-purple-800 mb-3">
