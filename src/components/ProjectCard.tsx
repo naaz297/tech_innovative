@@ -133,7 +133,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onUpdate, onDelete }
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-xs text-yellow-700 font-medium">
-                  {language === 'hi' ? 'अनुमानित मासिक आय' : 'Estimated Monthly Income'}
+                  {language === 'hi' ? 'अनुमानित म��सिक आय' : 'Estimated Monthly Income'}
                 </p>
                 <p className="text-lg font-bold text-yellow-800">
                   ₹{Math.round(project.carbonCredits * 1500 / 12).toLocaleString('hi-IN')}
@@ -199,7 +199,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onUpdate, onDelete }
             <div className="p-6">
               <p className="text-gray-700 mb-6">
                 {language === 'hi' 
-                  ? 'क्या आप वाकई इस प्रोजेक्ट को हटाना चाहते हैं? यह क्रिया वापस नहीं की जा सकती।'
+                  ? 'क्या आ�� वाकई इस प्रोजेक्ट को हटाना चाहते हैं? यह क्रिया वापस नहीं की जा सकती।'
                   : 'Are you sure you want to delete this project? This action cannot be undone.'
                 }
               </p>

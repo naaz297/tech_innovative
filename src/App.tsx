@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Dashboard from './components/Dashboard';
-import AddProjectModal from './components/AddProjectModal';
 import Navbar from './components/Navbar';
 import CarbonCalculator from './components/CarbonCalculator';
 import EducationPanel from './components/EducationPanel';
@@ -8,10 +7,10 @@ import Footer from './components/Footer';
 import VoiceAssistant from './components/VoiceAssistant';
 import LanguageDetector from './components/LanguageDetector';
 import { Project } from './types/Project';
-import { LanguageProvider } from './contexts/LanguageContext';
+import { useLanguage } from './contexts/LanguageContext';
 
 function App() {
-  const [showAddProject, setShowAddProject] = useState(false);
+  const { language } = useLanguage();
   const [projects, setProjects] = useState<Project[]>([
     {
       id: '1',
@@ -66,7 +65,6 @@ function App() {
       id: Date.now().toString(),
     };
     setProjects([...projects, newProject]);
-    setShowAddProject(false);
   };
 
   const handleUpdateProject = (updatedProject: Project) => {
@@ -76,12 +74,10 @@ function App() {
   };
 
   const handleDeleteProject = (projectId: string) => {
-    if (window.confirm(language === 'hi' ? 'क्या आप वाकई इस प्रोजेक्ट को हटाना चाहते हैं?' : 'Are you sure you want to delete this project?')) {
-      setProjects(prev => prev.filter(p => p.id !== projectId));
-    }
+    setProjects(prev => prev.filter(p => p.id !== projectId));
   };
   return (
-    <LanguageProvider>
+    <>
       <LanguageDetector />
       <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-100 flex flex-col relative overflow-hidden" style={{
         backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2322c55e' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
@@ -103,9 +99,9 @@ function App() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Main Dashboard */}
               <div className="lg:col-span-2">
-                <Dashboard 
-                  projects={projects} 
-                  onAddProject={() => setShowAddProject(true)}
+                <Dashboard
+                  projects={projects}
+                  onAddProject={handleAddProject}
                   onUpdateProject={handleUpdateProject}
                   onDeleteProject={handleDeleteProject}
                 />
@@ -124,14 +120,8 @@ function App() {
 
         <VoiceAssistant />
 
-        {showAddProject && (
-          <AddProjectModal
-            onClose={() => setShowAddProject(false)}
-            onSubmit={handleAddProject}
-          />
-        )}
       </div>
-    </LanguageProvider>
+    </>
   );
 }
 

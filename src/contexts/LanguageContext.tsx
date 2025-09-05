@@ -20,7 +20,7 @@ const translations = {
     
     // Dashboard
     'dashboard.title': 'आपका कार्बन डैशबोर्ड',
-    'dashboard.subtitle': 'अपने खेत की कार्बन क्रेडिट्स देखें और प्रबंधित करें',
+    'dashboard.subtitle': 'अपने खेत की कार्बन क्रेडिट्स देखें औ�� प्रबंधित करें',
     'dashboard.addProject': 'नया प्रोजेक्ट जोड़ें',
     'dashboard.projects': 'आपके प्रोजेक्ट्स',
     'dashboard.noProjects': 'कोई प्रोजेक्ट नहीं',
@@ -41,7 +41,7 @@ const translations = {
     'modal.subtitle': 'अपने खेत को कार्बन क्रेडिट प्रोग्राम में शामिल करें',
     'modal.basicInfo': 'बुनियादी जानकारी',
     'modal.projectName': 'प्रोजेक्ट का नाम',
-    'modal.cropType': 'फसल का प्रकार चुनें',
+    'modal.cropType': 'फसल का प्रकार च��नें',
     'modal.rice': 'धान/चावल',
     'modal.agroforestry': 'कृषि वानिकी',
     'modal.location': 'स्थान/गांव',
@@ -63,7 +63,31 @@ const translations = {
     'footer.terms': 'नियम और शर्तें',
     'footer.support': 'सहायता',
     'footer.faq': 'सामान्य प्रश्न',
-    'footer.rights': '© 2025 Innovative Mind. सभी अधिकार सुरक्षित।'
+    'footer.rights': '© 2025 Innovative Mind. सभी अधिकार सुरक्षित।',
+
+    // Dashboard/Stats (app-wide keys)
+    'totalCarbonCredits': 'कुल कार्बन क्रेडिट',
+    'totalCredits': 'कुल क्रेडिट',
+    'estimatedIncome': 'अनुमानित आय',
+    'avgPerProject': 'प्रोजेक्ट प्रति औसत',
+    'nextPayment': 'अगला भुगतान',
+    'days': 'दिन',
+    'totalArea': 'कुल क्षेत्रफल',
+    'totalLand': 'कुल भूमि',
+    'acres': 'एकड़',
+    'avgPerAcre': 'प्रति एकड़ औसत',
+    'largestFarm': 'सबसे बड़ा खेत',
+    'totalVillages': 'कुल गांव',
+    'activeProjects': 'सक्रिय प्रोजेक्ट',
+    'activeNow': 'अभी सक्रिय',
+    'completed': 'पूर्ण',
+    'successRate': 'सफलता दर',
+    'thisMonth': 'इस महीने',
+    'yourProjects': 'आपके प्रोजेक्ट',
+    'addProject': 'प्रोजेक्ट जोड़ें',
+    'noProjectsYet': 'अभी तक कोई प्रोजेक्ट नहीं',
+    'startByAddingProject': 'पहला प्रोजेक्ट जोड़कर शुरू करें',
+    'close': 'बंद करें'
   },
   en: {
     // Navigation
@@ -120,7 +144,31 @@ const translations = {
     'footer.terms': 'Terms & Conditions',
     'footer.support': 'Support',
     'footer.faq': 'FAQ',
-    'footer.rights': '© 2025 Innovative Mind. All rights reserved.'
+    'footer.rights': '© 2025 Innovative Mind. All rights reserved.',
+
+    // Dashboard/Stats (app-wide keys)
+    'totalCarbonCredits': 'Total Carbon Credits',
+    'totalCredits': 'Total Credits',
+    'estimatedIncome': 'Estimated Income',
+    'avgPerProject': 'Avg per Project',
+    'nextPayment': 'Next Payment',
+    'days': 'days',
+    'totalArea': 'Total Area',
+    'totalLand': 'Total Land',
+    'acres': 'acres',
+    'avgPerAcre': 'Avg per Acre',
+    'largestFarm': 'Largest Farm',
+    'totalVillages': 'Total Villages',
+    'activeProjects': 'Active Projects',
+    'activeNow': 'Active Now',
+    'completed': 'Completed',
+    'successRate': 'Success Rate',
+    'thisMonth': 'This Month',
+    'yourProjects': 'Your Projects',
+    'addProject': 'Add Project',
+    'noProjectsYet': 'No projects yet',
+    'startByAddingProject': 'Start by adding your first project',
+    'close': 'Close'
   },
   bn: {
     'nav.title': 'AgriCarbon MRV',
@@ -144,9 +192,9 @@ const translations = {
     'nav.preferences': 'அமைப்புகள்',
     'nav.signout': 'வெளியேறு',
     'nav.darkmode': 'இருண்ட பயன்முறை',
-    'dashboard.title': 'உங்கள் கார்பன் டாஷ்போர்டு',
+    'dashboard.title': 'உங்கள் ���ார்பன் டாஷ்போர்டு',
     'dashboard.addProject': 'புதிய திட்டத்தைச் சேர்க்கவும்',
-    'stats.totalCredits': 'மொத்த கார்பன் கிரெடிட்கள்',
+    'stats.totalCredits': 'மொத்த கார்பன் கிரெடிட்கள���',
     'footer.company': 'Innovative Mind',
     'footer.about': 'எங்களைப் பற்றி'
   },
@@ -222,7 +270,7 @@ const translations = {
   },
   pa: {
     'nav.title': 'AgriCarbon MRV',
-    'nav.subtitle': 'ਖੇਤੀਬਾੜੀ ਕਾਰਬਨ ਟਰੈਕਿੰਗ',
+    'nav.subtitle': 'ਖ��ਤੀਬਾੜੀ ਕਾਰਬਨ ਟਰੈਕਿੰਗ',
     'nav.account': 'Innovative Mind',
     'nav.profile': 'ਪ੍ਰੋਫਾਈਲ',
     'nav.preferences': 'ਸੈਟਿੰਗਾਂ',
@@ -246,7 +294,7 @@ const translations = {
     'dashboard.addProject': 'ନୂତନ ପ୍ରକଳ୍ପ ଯୋଗ କରନ୍ତୁ',
     'stats.totalCredits': 'ମୋଟ କାର୍ବନ କ୍ରେଡିଟ',
     'footer.company': 'Innovative Mind',
-    'footer.about': 'ଆମ ବିଷୟରେ'
+    'footer.about': 'ଆମ ବି���ୟରେ'
   },
   as: {
     'nav.title': 'AgriCarbon MRV',

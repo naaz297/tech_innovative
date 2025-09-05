@@ -10,9 +10,10 @@ interface DashboardProps {
   projects: Project[];
   onAddProject: (project: Omit<Project, 'id'>) => void;
   onDeleteProject: (id: string) => void;
+  onUpdateProject?: (project: Project) => void;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ projects, onAddProject, onDeleteProject }) => {
+const Dashboard: React.FC<DashboardProps> = ({ projects, onAddProject, onDeleteProject, onUpdateProject }) => {
   const { t, language } = useLanguage();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [selectedStat, setSelectedStat] = useState<string | null>(null);
@@ -141,7 +142,7 @@ const Dashboard: React.FC<DashboardProps> = ({ projects, onAddProject, onDeleteP
     <div className="space-y-6">
       {/* Dashboard Heading */}
       <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-2">
+        <h1 className="text-3xl font-bold text-black mb-2">
           {language === 'hi' ? 'आपका डैशबोर्ड' : 'Your Dashboard'}
         </h1>
         <p className="text-gray-600 dark:text-gray-400">
@@ -209,14 +210,14 @@ const Dashboard: React.FC<DashboardProps> = ({ projects, onAddProject, onDeleteP
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project) => (
-            <ProjectCard key={project.id} project={project} onDelete={onDeleteProject} />
+            <ProjectCard key={project.id} project={project} onUpdate={onUpdateProject} onDelete={onDeleteProject} />
           ))}
         </div>
       )}
 
       {/* Add Project Modal */}
       {isAddModalOpen && (
-        <AddProjectModal onClose={() => setIsAddModalOpen(false)} onSubmit={onAddProject} />
+        <AddProjectModal onClose={() => setIsAddModalOpen(false)} onSubmit={(p) => { onAddProject(p); setIsAddModalOpen(false); }} />
       )}
 
       {/* Stats Detail Modal */}
