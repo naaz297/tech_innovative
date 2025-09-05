@@ -99,7 +99,7 @@ const AddProjectModal: React.FC<AddProjectModalProps> = ({ onClose, onSubmit }) 
   return (
     <>
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto mx-auto">
+       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-4xl w-full max-h-[95vh] overflow-y-auto mx-auto transform scale-110">
           {/* Header */}
           <div className="bg-gradient-to-r from-green-500 to-emerald-600 p-6 text-white relative overflow-hidden">
             {/* Background Pattern */}
@@ -177,6 +177,7 @@ const AddProjectModal: React.FC<AddProjectModalProps> = ({ onClose, onSubmit }) 
                   </label>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <button
+                     type="button"
                       onClick={() => handleInputChange('type', 'rice')}
                       className={`p-6 rounded-xl border-2 transition-all transform hover:scale-105 ${
                         formData.type === 'rice'
@@ -192,6 +193,7 @@ const AddProjectModal: React.FC<AddProjectModalProps> = ({ onClose, onSubmit }) 
                     </button>
                     
                     <button
+                     type="button"
                       onClick={() => handleInputChange('type', 'agroforestry')}
                       className={`p-6 rounded-xl border-2 transition-all transform hover:scale-105 ${
                         formData.type === 'agroforestry'
