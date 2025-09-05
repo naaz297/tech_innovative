@@ -32,7 +32,7 @@ function App() {
       name: 'श्यामा देवी का मिश्रित बगीचा - हरिहरपुर गांव',
       type: 'agroforestry',
       area: 1.8,
-      location: 'हरिहरपुर, ज���लंधर, पंजाब',
+      location: 'हरिहरपुर, जालंधर, पंजाब',
       status: 'pending',
       carbonCredits: 8.7,
       lastUpdated: new Date('2024-12-10'),
@@ -55,7 +55,7 @@ function App() {
         'https://images.pexels.com/photos/1595104/pexels-photo-1595104.jpeg?auto=compress&cs=tinysrgb&w=800',
         'https://images.pexels.com/photos/2132227/pexels-photo-2132227.jpeg?auto=compress&cs=tinysrgb&w=800'
       ],
-      description: 'पूर्णतः जैविक धान की खेती। ��र्षा जल संचयन और ड्रिप सिंचाई का उपयोग। मिट्टी में कार्बन की मात्रा बढ़ाने के लिए हरी खाद का प्रयोग।'
+      description: 'पूर्णतः जैविक धान की खेती। वर्षा जल संचयन और ड्रिप सिंचाई का उपयोग। मिट्टी में कार्बन की मात्रा बढ़ाने के लिए हरी खाद का प्रयोग।'
     }
   ]);
 
@@ -80,7 +80,7 @@ function App() {
   return (
     <>
       <LanguageDetector />
-      <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-100 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 flex flex-col relative overflow-hidden" style={{
+      <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-100 flex flex-col relative overflow-hidden" style={{
         backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2322c55e' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
         backgroundSize: '60px 60px'
       }}>
