@@ -20,7 +20,8 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({ onClose }) => {
       time: language === 'hi' ? '2 घंटे पहले' : '2 hours ago',
       icon: <Coins className="h-5 w-5 text-green-600" />,
       bgColor: 'bg-green-50',
-      borderColor: 'border-green-200'
+      borderColor: 'border-green-200',
+      action: () => alert(language === 'hi' ? 'कार्बन क्रेडिट्स: 5.2 टन\nआय: ₹7,800\nस्थिति: प्राप्त' : 'Carbon Credits: 5.2 tons\nIncome: ₹7,800\nStatus: Received')
     },
     {
       id: 2,
@@ -32,7 +33,8 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({ onClose }) => {
       time: language === 'hi' ? '1 दिन पहले' : '1 day ago',
       icon: <Award className="h-5 w-5 text-blue-600" />,
       bgColor: 'bg-blue-50',
-      borderColor: 'border-blue-200'
+      borderColor: 'border-blue-200',
+      action: () => alert(language === 'hi' ? 'प्रोजेक्ट: रामेश्वर का धान का खेत\nस्थिति: स्वीकृत\nकार्बन क्रेडिट्स: सक्रिय' : 'Project: Rameshwar\'s Rice Farm\nStatus: Approved\nCarbon Credits: Active')
     },
     {
       id: 3,
@@ -44,7 +46,8 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({ onClose }) => {
       time: language === 'hi' ? '3 दिन पहले' : '3 days ago',
       icon: <AlertCircle className="h-5 w-5 text-yellow-600" />,
       bgColor: 'bg-yellow-50',
-      borderColor: 'border-yellow-200'
+      borderColor: 'border-yellow-200',
+      action: () => alert(language === 'hi' ? 'कृपया नई तस्वीरें अपलोड करें\nअंतिम अपडेट: 3 दिन पहले\nअगला अपडेट: आवश्यक' : 'Please upload new photos\nLast update: 3 days ago\nNext update: Required')
     },
     {
       id: 4,
@@ -56,7 +59,8 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({ onClose }) => {
       time: language === 'hi' ? '5 दिन पहले' : '5 days ago',
       icon: <CheckCircle className="h-5 w-5 text-purple-600" />,
       bgColor: 'bg-purple-50',
-      borderColor: 'border-purple-200'
+      borderColor: 'border-purple-200',
+      action: () => alert(language === 'hi' ? 'पेमेंट राशि: ₹15,750\nस्थिति: प्रोसेसिंग\nअनुमानित समय: 2-3 दिन' : 'Payment Amount: ₹15,750\nStatus: Processing\nEstimated Time: 2-3 days')
     }
   ];
 
@@ -93,7 +97,8 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({ onClose }) => {
         {notifications.map(notification => (
           <div 
             key={notification.id} 
-            className={`p-4 border-b border-gray-100 hover:bg-gray-50 transition-colors ${notification.bgColor} border-l-4 ${notification.borderColor}`}
+            className={`p-4 border-b border-gray-100 hover:bg-gray-50 transition-colors cursor-pointer ${notification.bgColor} border-l-4 ${notification.borderColor}`}
+            onClick={notification.action}
           >
             <div className="flex items-start space-x-3">
               <div className="bg-white p-2 rounded-lg shadow-sm">
@@ -125,7 +130,10 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({ onClose }) => {
           >
             {language === 'hi' ? 'सभी पढ़ें' : 'Mark All Read'}
           </button>
-          <button className="flex-1 text-blue-600 hover:text-blue-700 text-sm font-medium py-2 px-3 rounded-lg hover:bg-blue-50 transition-colors">
+          <button 
+            onClick={() => alert(language === 'hi' ? 'सभी सूचनाएं देखी गईं' : 'All notifications viewed')}
+            className="flex-1 text-blue-600 hover:text-blue-700 text-sm font-medium py-2 px-3 rounded-lg hover:bg-blue-50 transition-colors"
+          >
             {language === 'hi' ? 'सभी देखें' : 'View All'}
           </button>
         </div>

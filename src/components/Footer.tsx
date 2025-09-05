@@ -306,7 +306,7 @@ const Footer = () => {
               </h4>
               <div className="space-y-3">
                 <a 
-                  href="tel:+916246789012"
+                  href="tel:+916246xxxxxx"
                   className="flex items-center space-x-3 text-green-200 hover:text-white transition-colors group"
                 >
                   <Phone className="h-4 w-4 group-hover:scale-110 transition-transform" />
