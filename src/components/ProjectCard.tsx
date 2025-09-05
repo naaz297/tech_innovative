@@ -54,7 +54,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onUpdate, onDelete }
   };
   return (
     <>
-      <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden border border-gray-100">
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden border border-gray-100 dark:border-gray-700">
         {/* Header with gradient and crop icon */}
         <div className="bg-gradient-to-r from-green-500 to-emerald-600 p-4 relative">
           <div className="flex items-center justify-between">
@@ -82,7 +82,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onUpdate, onDelete }
 
           {/* Dropdown Menu */}
           {showMenu && (
-            <div className="absolute right-4 top-16 bg-white rounded-lg shadow-xl z-10 min-w-[180px] border">
+            <div className="absolute right-4 top-16 bg-white dark:bg-gray-800 rounded-lg shadow-xl z-10 min-w-[180px] border dark:border-gray-700">
               <button
                 onClick={() => {
                   setShowDeleteConfirm(true);
@@ -101,7 +101,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onUpdate, onDelete }
           {/* Location with clickable map */}
           <button
             onClick={() => setShowMap(true)}
-            className="flex items-center text-gray-600 hover:text-green-600 transition-colors mb-4 group"
+            className="flex items-center text-gray-600 dark:text-gray-300 hover:text-green-600 transition-colors mb-4 group"
           >
             <MapPin className="h-4 w-4 mr-2 group-hover:scale-110 transition-transform" />
             <span className="text-sm underline decoration-dotted">{project.location}</span>
@@ -109,19 +109,19 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onUpdate, onDelete }
           
           {/* Stats Grid */}
           <div className="grid grid-cols-2 gap-4 mb-4">
-            <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-4 rounded-lg border">
-              <p className="text-xs text-gray-500 mb-1">
+            <div className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-600 p-4 rounded-lg border dark:border-gray-600">
+              <p className="text-xs text-gray-500 dark:text-gray-300 mb-1">
                 {language === 'hi' ? 'क्षेत्रफल' : 'Area'}
               </p>
-              <p className="text-lg font-bold text-gray-800">
+              <p className="text-lg font-bold text-gray-800 dark:text-gray-100">
                 {project.area} {language === 'hi' ? 'एकड़' : 'acres'}
               </p>
             </div>
-            <div className="bg-gradient-to-br from-green-50 to-emerald-100 p-4 rounded-lg border border-green-200">
-              <p className="text-xs text-green-600 mb-1">
+            <div className="bg-gradient-to-br from-green-50 to-emerald-100 dark:from-green-900/20 dark:to-emerald-900/20 p-4 rounded-lg border border-green-200 dark:border-green-800">
+              <p className="text-xs text-green-600 dark:text-green-400 mb-1">
                 {language === 'hi' ? 'कार्बन क्रेडिट्स' : 'Carbon Credits'}
               </p>
-              <p className="text-lg font-bold text-green-700 flex items-center">
+              <p className="text-lg font-bold text-green-700 dark:text-green-300 flex items-center">
                 <Coins className="h-4 w-4 mr-1" />
                 {project.carbonCredits.toFixed(1)}
               </p>
@@ -129,13 +129,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onUpdate, onDelete }
           </div>
 
           {/* Income Estimate */}
-          <div className="bg-gradient-to-r from-yellow-50 to-amber-50 p-3 rounded-lg border border-yellow-200 mb-4">
+          <div className="bg-gradient-to-r from-yellow-50 to-amber-50 dark:from-yellow-900/10 dark:to-amber-900/10 p-3 rounded-lg border border-yellow-200 dark:border-yellow-800 mb-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs text-yellow-700 font-medium">
+                <p className="text-xs text-yellow-700 dark:text-yellow-300 font-medium">
                   {language === 'hi' ? 'अनुमानित मासिक आय' : 'Estimated Monthly Income'}
                 </p>
-                <p className="text-lg font-bold text-yellow-800">
+                <p className="text-lg font-bold text-yellow-800 dark:text-yellow-200">
                   ₹{Math.round(project.carbonCredits * 1500 / 12).toLocaleString('hi-IN')}
                 </p>
               </div>
@@ -146,7 +146,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onUpdate, onDelete }
           {/* Last Updated with clickable date */}
           <button
             onClick={() => setShowDatePicker(true)}
-            className="flex items-center text-gray-500 text-xs mb-4 hover:text-green-600 transition-colors group"
+            className="flex items-center text-gray-500 dark:text-gray-400 text-xs mb-4 hover:text-green-600 transition-colors group"
           >
             <Calendar className="h-4 w-4 mr-2 group-hover:scale-110 transition-transform" />
             <span className="underline decoration-dotted">
@@ -192,12 +192,12 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onUpdate, onDelete }
       {/* Delete Confirmation Modal */}
       {showDeleteConfirm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full">
             <div className="bg-gradient-to-r from-red-500 to-red-600 p-6 text-white">
               <h3 className="text-xl font-bold">{language === 'hi' ? 'प्रोजेक्ट हटाएं?' : 'Delete Project?'}</h3>
             </div>
             <div className="p-6">
-              <p className="text-gray-700 mb-6">
+              <p className="text-gray-700 dark:text-gray-200 mb-6">
                 {language === 'hi' 
                   ? 'क्या आप वाकई इस प्रोजेक्ट को हटाना चाहते हैं? यह क्रिया वापस नहीं की जा सकती।'
                   : 'Are you sure you want to delete this project? This action cannot be undone.'
@@ -206,7 +206,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onUpdate, onDelete }
               <div className="flex space-x-3">
                 <button
                   onClick={() => setShowDeleteConfirm(false)}
-                  className="flex-1 px-4 py-3 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                  className="flex-1 px-4 py-3 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                 >
                   {language === 'hi' ? 'रद्द करें' : 'Cancel'}
                 </button>
