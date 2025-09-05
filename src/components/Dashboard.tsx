@@ -217,7 +217,7 @@ const Dashboard: React.FC<DashboardProps> = ({ projects, onAddProject, onDeleteP
 
       {/* Add Project Modal */}
       {isAddModalOpen && (
-        <AddProjectModal onClose={() => setIsAddModalOpen(false)} onSubmit={onAddProject} />
+        <AddProjectModal onClose={() => setIsAddModalOpen(false)} onSubmit={(p) => { onAddProject(p); setIsAddModalOpen(false); }} />
       )}
 
       {/* Stats Detail Modal */}
