@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Plus, TrendingUp, Coins, MapPin } from 'lucide-react';
 import ProjectCard from './ProjectCard';
 import StatsCard from './StatsCard';
